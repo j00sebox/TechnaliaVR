@@ -10,11 +10,15 @@ public class ShootIce : MonoBehaviour
 
     ParticleSystem ice;
 
+    ParticleSystem.EmissionModule emission;
+    
+
     // Start is called before the first frame update
     void Start()
     {
         layerMask = LayerMask.GetMask("Ground");
         ice = GetComponentInChildren<ParticleSystem> ();
+        emission = ice.emission;
     }
 
     // Update is called once per frame
@@ -24,18 +28,19 @@ public class ShootIce : MonoBehaviour
         {
             if(Input.GetButton("Fire1"))
             {
-                ice.Play();
-            }
             
-            if(ice.isPlaying)
+              emission.enabled = true;
+            
+            }
+            else
             {
-                ice.Stop();
+                emission.enabled = false;
             }
         }
-
-        if(ice.isPlaying)
+        else
         {
-            ice.Stop();
+            emission.enabled = false;
         }
+        
     }
 }
