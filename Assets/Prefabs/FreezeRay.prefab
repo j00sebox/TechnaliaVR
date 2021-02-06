@@ -8658,6 +8658,7 @@ GameObject:
   - component: {fileID: 2404474490246248291}
   - component: {fileID: 2404474490246248292}
   - component: {fileID: 7597358266035549083}
+  - component: {fileID: 5682551277839725028}
   m_Layer: 0
   m_Name: Shaft
   m_TagString: Untagged
@@ -9389,6 +9390,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787937c877f9e7646bc287f94823853c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iceSheet: {fileID: 5125719640124070118, guid: 5e2cd26b14220b94e8203890062acaff,
+    type: 3}
+--- !u!114 &5682551277839725028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2404474490246248294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e26ee7af6fdc64d8bffad7e5482c13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brush: []
+  brushSelection: 0
+  areaofEffect: 100
+  strength: 0
+  flattenHeight: 0
+  effect: 4
+  paint: 1
 --- !u!1 &2404474490481507834
 GameObject:
   m_ObjectHideFlags: 0

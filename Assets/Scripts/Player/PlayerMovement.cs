@@ -16,9 +16,11 @@ public class PlayerMovement : MonoBehaviour
 
     float speed;
 
-
-
     Vector3 velocity;
+
+    Vector3 interpolatedPos;
+
+    bool onIce = false;
 
     void Start()
     {
@@ -38,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        if(z != 0)
+        if(z != 0 || x != 0)
         {
             if(Input.GetKey(KeyCode.LeftShift))
             {
@@ -71,6 +73,31 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
 
+        if(onIce)
+        {
+            velocity.x += x*50f;
+            velocity.z += z*50f;
+        }
+        else
+        {
+            velocity = Vector3.Lerp(velocity, new Vector3(0, velocity.y, 0), 45f);
+        }
+
         controller.Move(velocity * Time.deltaTime);
     }
+
+    void OnTriggerEnter(Collider Col)
+    {
+        if(Col.tag == "Ice")
+        {
+            onIce = true;
+        }
+    }
+
+    void OnTriggerExit()
+    {
+        onIce = false;
+    }
 }
+
+
