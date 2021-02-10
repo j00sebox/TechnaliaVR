@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed = 9f;
     public float sprintSpeed = 14f;
     public float gravity = -9.81f;
-    public float jumpHeight = 3f;
+    public float jumpHeight = 5f;
 
     float speed;
 
@@ -22,10 +22,20 @@ public class PlayerMovement : MonoBehaviour
 
     bool onIce = false;
 
+    RaycastHit toFloor;
+
+    int layerMask;
+
+    TerrainEditor tEdit;
+
+    Terrain terrain;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        layerMask = LayerMask.GetMask("Ground");
+        tEdit = GetComponent<TerrainEditor> ();
     }
 
     // Update is called once per frame
@@ -35,6 +45,39 @@ public class PlayerMovement : MonoBehaviour
         if(controller.isGrounded && velocity.y < 0)
         {
             velocity.y = 0;
+        }
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.up), out toFloor, 1, layerMask))
+        {
+
+            // change player's body rotation if on sloped terrain
+            // the cross product of the floor's normal to the player's current right vector will give us new forward 
+            // transform.rotation = Quaternion.LookRotation(Vector3.Cross(transform.right, toFloor.normal));
+
+            // get current terrain object player is standing on, if none returns null
+            terrain = tEdit.GetTerrainAtObject(toFloor.transform.gameObject);
+
+            if(terrain != null)
+            {
+                tEdit.SetEditValues(terrain);
+
+                // get heightmap coords
+                tEdit.GetCoords(toFloor, out int terX, out int terZ);
+
+                // could cause problems
+                if(tEdit.CheckIce(terX, terZ))
+                {
+                    onIce = true;
+                }
+                else
+                {
+                    onIce = false;
+                }
+            }
+        }
+        else
+        {
+            onIce = false;
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -75,29 +118,18 @@ public class PlayerMovement : MonoBehaviour
 
         if(onIce)
         {
-            velocity.x += x*50f;
-            velocity.z += z*50f;
+            velocity += transform.forward*z;
         }
         else
         {
-            velocity = Vector3.Lerp(velocity, new Vector3(0, velocity.y, 0), 45f);
+            // this will gradually slow down the player
+            velocity.x *= 90f/100f;
+            velocity.z *= 90f/100f;
         }
 
         controller.Move(velocity * Time.deltaTime);
     }
 
-    void OnTriggerEnter(Collider Col)
-    {
-        if(Col.tag == "Ice")
-        {
-            onIce = true;
-        }
-    }
-
-    void OnTriggerExit()
-    {
-        onIce = false;
-    }
 }
 
 

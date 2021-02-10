@@ -22,7 +22,7 @@ public class TerrainEditor : MonoBehaviour
             return gameObject.GetComponent<Terrain> ();
         }
 
-        return default(Terrain);
+        return null;
     }
 
     public TerrainData GetTerrainData()
@@ -120,6 +120,18 @@ public class TerrainEditor : MonoBehaviour
         }
 
         targetT.terrainData.SetAlphamaps(x, z, splat);
+    }
+
+    public bool CheckIce(int x, int z)
+    {
+        splat = targetT.terrainData.GetAlphamaps(x, z, 1, 1);
+
+        if(splat[0, 0, 2] == 1)
+        {
+            return true;
+        }
+
+        return false;
     }
     
 }

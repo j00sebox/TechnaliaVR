@@ -9404,13 +9404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e26ee7af6fdc64d8bffad7e5482c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brush: []
-  brushSelection: 0
-  areaofEffect: 100
-  strength: 0
-  flattenHeight: 0
-  effect: 4
-  paint: 1
 --- !u!1 &2404474490481507834
 GameObject:
   m_ObjectHideFlags: 0
@@ -10246,7 +10239,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5953023556711279196}
   serializedVersion: 6
-  lengthInSec: 5
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
