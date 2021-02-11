@@ -15,6 +15,8 @@ public class TerrainEditor : MonoBehaviour
     int sampleWidth = 10;
     int sampleHeight = 10;
 
+    int iceLayer = 2;
+
     public Terrain GetTerrainAtObject(GameObject gameObject)
     {
         if(gameObject.GetComponent<Terrain> ())
@@ -98,38 +100,49 @@ public class TerrainEditor : MonoBehaviour
 
     public void ModifyTerrain(int x, int z)
     {
-        splat = targetT.terrainData.GetAlphamaps(x, z, sampleWidth, sampleHeight);
-
-        for(int k = 0; k < sampleWidth; k++)
+        if(x + sampleWidth <= 512 && z + sampleHeight <= 512)
         {
-            for(int j = 0; j < sampleHeight; j++)
+            splat = targetT.terrainData.GetAlphamaps(x, z, sampleWidth, sampleHeight);
+
+            for(int k = 0; k < sampleWidth; k++)
             {
-                for(int i = 0; i <= 2; i++)
+                for(int j = 0; j < sampleHeight; j++)
                 {
-                    if(i == 2)
+                    for(int i = 0; i <= 2; i++)
                     {
-                        splat[k, j, i] = 1;
+                        if(i == 2)
+                        {
+                            splat[k, j, i] = 1;
+                        }
+                        else
+                        {
+                            splat[k, j, i] = 0;
+                        }
+                        
                     }
-                    else
-                    {
-                        splat[k, j, i] = 0;
-                    }
-                    
                 }
             }
-        }
 
-        targetT.terrainData.SetAlphamaps(x, z, splat);
+            targetT.terrainData.SetAlphamaps(x, z, splat);
+        }
+       
     }
 
+    // uses the world to terrain coordinates to determine if the player is currently standing over an ice texture
     public bool CheckIce(int x, int z)
     {
-        splat = targetT.terrainData.GetAlphamaps(x, z, 1, 1);
-
-        if(splat[0, 0, 2] == 1)
+        // this check accounts for boundary cases since we can't do a one offset at the last element
+        if(x != 512 && z != 512)
         {
-            return true;
-        }
+            // samples the 1x1 splatmap of the desired coordinates 
+            splat = targetT.terrainData.GetAlphamaps(x, z, 1, 1);
+
+            // if the player is standing on an ice layer return true
+            if(splat[0, 0, iceLayer] == 1)
+            {
+                return true;
+            }
+        }  
 
         return false;
     }

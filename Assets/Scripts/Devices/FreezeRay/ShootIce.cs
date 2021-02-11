@@ -17,6 +17,8 @@ public class ShootIce : MonoBehaviour
     TerrainEditor editor;
 
     Terrain tob;
+
+    MovingPlatform platform;
     
 
     // Start is called before the first frame update
@@ -31,16 +33,40 @@ public class ShootIce : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // cast from gun to ground
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10, layerMask))
         {
+            // if player decides to shoot freeze ray some prework must be done to change texture of ground
             if(Input.GetButton("Fire1"))
             {
-            
-              emission.enabled = true;
-              tob = editor.GetTerrainAtObject(hit.transform.gameObject);
-              editor.SetEditValues(tob);
-              editor.GetCoords(hit, out int terX, out int terZ);
-              editor.ModifyTerrain(terX, terZ);
+                // turn particle effect on
+                emission.enabled = true;
+
+                if(hit.collider.tag == "MovingPlat")
+                {
+                    platform = hit.transform.gameObject.GetComponent<MovingPlatform> ();
+
+                    if(!platform.iced)
+                    {
+                        platform.Icy();
+                    }
+                }
+                else
+                {
+                    // get reference to terrain object
+                    tob = editor.GetTerrainAtObject(hit.transform.gameObject);
+
+                    if(tob != null)
+                    {
+                        editor.SetEditValues(tob);
+
+                        // convert player world coordinates into terrain coordinates
+                        editor.GetCoords(hit, out int terX, out int terZ);
+
+                        // produce ice at specified terrain coordinates
+                        editor.ModifyTerrain(terX, terZ);
+                    }
+                }
             }
             else
             {
