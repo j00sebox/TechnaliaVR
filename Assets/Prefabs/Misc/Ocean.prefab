@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3321178822755339004}
   - component: {fileID: 3321178822755339007}
   - component: {fileID: 3321178822755339006}
+  - component: {fileID: 400396074}
+  - component: {fileID: 400396075}
   m_Layer: 0
   m_Name: Ocean
   m_TagString: Untagged
@@ -94,3 +96,29 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &400396074
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3321178822755338993}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1266011, y: 3, z: 1.5897523}
+  m_Center: {x: -1.4157698, y: 0, z: -1.4376333}
+--- !u!114 &400396075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3321178822755338993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6325ce492589f6e4da42d8b9c7a543c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawn: {fileID: 0}

@@ -14,6 +14,8 @@ public class MovingPlatform : MonoBehaviour
 
     public bool xdir = true;
 
+    public bool powered = true;
+
     float width;
 
     float length;
@@ -31,7 +33,7 @@ public class MovingPlatform : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!iced)
+        if(!iced && powered)
         {
             // need to check direction to move it
             if(forwards)

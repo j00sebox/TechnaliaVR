@@ -41,101 +41,103 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        // if the player is not in the air set their y velocity to 0
-        if(controller.isGrounded && velocity.y < 0)
+        if(!PauseManager.paused && !PauseManager.reading)
         {
-            velocity.y = 0;
-        }
-
-        // get inputs from WASD keys
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        // raycast from player to the ground to determine what kind of terrain they are on 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.up), out toFloor, 1, layerMask))
-        {
-            // get current terrain object player is standing on, if none returns null
-            terrain = tEdit.GetTerrainAtObject(toFloor.transform.gameObject);
-
-            if(terrain != null)
+            // if the player is not in the air set their y velocity to 0
+            if(controller.isGrounded && velocity.y < 0)
             {
-                tEdit.SetEditValues(terrain);
-
-                // get heightmap coords
-                tEdit.GetCoords(toFloor, out int terX, out int terZ);
-
-                if(tEdit.CheckIce(terX, terZ))
-                {
-                    onIce = true;
-                }
-                else
-                {
-                    onIce = false;
-                }
+                velocity.y = 0;
             }
-        }
-        else
-        {
-            onIce = false;
-        }
 
-        
+            // get inputs from WASD keys
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
 
-        // if any of these keys are pressed appropriate animations should play
-        if(z != 0 || x != 0)
-        {
-            // sprint button changes player's speed
-            if(Input.GetKey(KeyCode.LeftShift))
+            // raycast from player to the ground to determine what kind of terrain they are on 
+            if (Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.up), out toFloor, 1, layerMask))
             {
-                anim.SetBool("IsWalking", false);
-                anim.SetBool("IsRunning", true);
-                speed = sprintSpeed;
+                // get current terrain object player is standing on, if none returns null
+                terrain = tEdit.GetTerrainAtObject(toFloor.transform.gameObject);
+
+                if(terrain != null)
+                {
+                    tEdit.SetEditValues(terrain);
+
+                    // get heightmap coords
+                    tEdit.GetCoords(toFloor, out int terX, out int terZ);
+
+                    if(tEdit.CheckIce(terX, terZ))
+                    {
+                        onIce = true;
+                    }
+                    else
+                    {
+                        onIce = false;
+                    }
+                }
             }
             else
             {
-                anim.SetBool("IsRunning", false);
-                anim.SetBool("IsWalking", true);
-                speed = walkSpeed;
+                onIce = false;
             }
-        }
-        else
-        {
-            anim.SetBool("IsWalking", false);
-        }
 
-        // move forwards/backwards with z and left/right with x
-        Vector3 move = transform.right * x + transform.forward * z;
-        
-        // character controller handles the movement
-        controller.Move(move * speed * Time.deltaTime);
-        
-        // play jump animation and calculate upwards velocity
-        if(Input.GetButtonDown("Jump"))
-        {
-            anim.SetTrigger("Jump");
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+            
 
-        // gradually brings play back to ground
-        velocity.y += gravity * Time.deltaTime;
+            // if any of these keys are pressed appropriate animations should play
+            if(z != 0 || x != 0)
+            {
+                // sprint button changes player's speed
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    anim.SetBool("IsWalking", false);
+                    anim.SetBool("IsRunning", true);
+                    speed = sprintSpeed;
+                }
+                else
+                {
+                    anim.SetBool("IsRunning", false);
+                    anim.SetBool("IsWalking", true);
+                    speed = walkSpeed;
+                }
+            }
+            else
+            {
+                anim.SetBool("IsWalking", false);
+            }
 
-        // if player is on ice then they gradually gain speed
-        if(onIce)
-        {
-            velocity += transform.forward*0.7f*z;
-        }
-        else
-        {
-            // this will gradually slow down the player
-            velocity.x *= 90f/100f;
-            velocity.z *= 90f/100f;
-        }
+            // move forwards/backwards with z and left/right with x
+            Vector3 move = transform.right * x + transform.forward * z;
+            
+            // character controller handles the movement
+            controller.Move(move * speed * Time.deltaTime);
+            
+            // play jump animation and calculate upwards velocity
+            if(Input.GetButtonDown("Jump"))
+            {
+                anim.SetTrigger("Jump");
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
 
-        // apply the velocity to the player
-        controller.Move(velocity * Time.deltaTime);
+            // gradually brings play back to ground
+            velocity.y += gravity * Time.deltaTime;
+
+            // if player is on ice then they gradually gain speed
+            if(onIce)
+            {
+                velocity += transform.forward*0.7f*z;
+            }
+            else
+            {
+                // this will gradually slow down the player
+                velocity.x *= 90f/100f;
+                velocity.z *= 90f/100f;
+            }
+
+            // apply the velocity to the player
+            controller.Move(velocity * Time.deltaTime);
+        }
     }
-
 }
+
 
 
