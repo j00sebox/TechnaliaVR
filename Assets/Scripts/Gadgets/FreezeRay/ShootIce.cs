@@ -21,6 +21,8 @@ public class ShootIce : MonoBehaviour
     MovingPlatform platform;
 
     FreezePanel freezePanel;
+
+    AudioSource iceAudio;
     
 
     // Start is called before the first frame update
@@ -30,6 +32,7 @@ public class ShootIce : MonoBehaviour
         ice = GetComponentInChildren<ParticleSystem> ();
         emission = ice.emission;
         editor = GetComponent<TerrainEditor> ();
+        iceAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -43,6 +46,11 @@ public class ShootIce : MonoBehaviour
             {
                 // turn particle effect on
                 emission.enabled = true;
+
+                if(!iceAudio.isPlaying)
+                {
+                    iceAudio.Play();
+                }
 
                 if(hit.collider.tag == "MovingPlat")
                 {
@@ -81,11 +89,21 @@ public class ShootIce : MonoBehaviour
             }
             else
             {
+                if(iceAudio.isPlaying)
+                {
+                    iceAudio.Stop();
+                }
+
                 emission.enabled = false;
             }
         }
         else
         {
+            if(iceAudio.isPlaying)
+            {
+                iceAudio.Stop();
+            }
+            
             emission.enabled = false;
         }
         

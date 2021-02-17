@@ -9,6 +9,12 @@ public class PlayerMovement : MonoBehaviour
 
     Animator anim;
 
+    AudioSource[] footstepSound;
+
+    int sandSound = 0;
+
+    int iceSound = 1;
+
     public float walkSpeed = 9f;
     public float sprintSpeed = 14f;
     public float gravity = -9.81f;
@@ -36,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         layerMask = LayerMask.GetMask("Ground");
         tEdit = GetComponent<TerrainEditor> ();
+        footstepSound = GetComponents<AudioSource> ();
     }
 
     // Update is called once per frame
@@ -86,6 +93,24 @@ public class PlayerMovement : MonoBehaviour
             // if any of these keys are pressed appropriate animations should play
             if(z != 0 || x != 0)
             {
+                // play different sound effects if the player is currently moving on sand vs ice
+                if(onIce)
+                {
+                    if(!footstepSound[iceSound].isPlaying)
+                    {
+                        footstepSound[sandSound].Stop();
+                        footstepSound[iceSound].Play();
+                    }
+                }
+                else
+                {   
+                    if(!footstepSound[sandSound].isPlaying)
+                    {
+                        footstepSound[iceSound].Stop();
+                        footstepSound[sandSound].Play();
+                    }
+                }
+
                 // sprint button changes player's speed
                 if(Input.GetKey(KeyCode.LeftShift))
                 {
@@ -103,6 +128,16 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 anim.SetBool("IsWalking", false);
+
+                if(footstepSound[iceSound].isPlaying)
+                {
+                    footstepSound[iceSound].Stop();
+                }
+
+                if(footstepSound[sandSound].isPlaying)
+                {
+                    footstepSound[sandSound].Stop();
+                }
             }
 
             // move forwards/backwards with z and left/right with x

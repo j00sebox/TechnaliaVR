@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+using System;
+using System.IO;
 
 public class RestoreTerrain : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class RestoreTerrain : MonoBehaviour
 
         td1 = terrain.terrainData;
 
-        FileUtil.ReplaceFile("./Assets/Resources/Terrain/" + td1.name + ".asset", "./Assets/Resources/TerrainBackups/" + td1.name + "_backup.asset");
+        File.Copy("./Assets/Resources/Terrain/" + td1.name + ".asset", "./Assets/Resources/TerrainBackups/" + td1.name + "_backup.asset", true);
 
         string dataName = "TerrainBackups/" + td1.name + "_backup";
         td2 = Resources.Load<TerrainData>(dataName);
