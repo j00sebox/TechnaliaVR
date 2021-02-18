@@ -11,9 +11,9 @@ public class PlayerMovement : MonoBehaviour
 
     AudioSource[] footstepSound;
 
-    int sandSound = 0;
+    int sandSound = 1;
 
-    int iceSound = 1;
+    int iceSound = 0;
 
     public float walkSpeed = 9f;
     public float sprintSpeed = 14f;
