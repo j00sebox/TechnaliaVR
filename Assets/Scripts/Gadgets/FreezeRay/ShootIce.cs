@@ -39,7 +39,7 @@ public class ShootIce : MonoBehaviour
     void Update()
     {
         // cast from gun to ground
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10, layerMask))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 15, layerMask))
         {
             // if player decides to shoot freeze ray some prework must be done to change texture of ground
             if(Input.GetButton("Fire1"))

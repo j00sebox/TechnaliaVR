@@ -9,17 +9,25 @@ public class ReadPaper : MonoBehaviour
 
     public GameObject entry;
 
+    bool inrange = false;
+
+    // if player is in range on collider then they have the ability to read
     void OnTriggerEnter(Collider col)
     {
         if(col.tag == "Player")
         {
+            inrange = true;
+
             read.enabled = true;
+
+            StartCoroutine("whileInRange");
         }
     }
 
-    void OnTriggerStay(Collider col)
+    // works a lot better than ontriggerstay()
+    IEnumerator whileInRange()
     {
-        if(col.tag == "Player")
+        while(inrange)
         {
             if(Input.GetKeyDown(KeyCode.E))
             {
@@ -36,6 +44,8 @@ public class ReadPaper : MonoBehaviour
                     read.enabled = false;
                 }
             }
+
+            yield return null;
         }
     }
 
@@ -43,6 +53,8 @@ public class ReadPaper : MonoBehaviour
     {
         if(col.tag == "Player")
         {
+            inrange = false;
+
             read.enabled = false;
         }
     }

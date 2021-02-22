@@ -128,7 +128,7 @@ public class MovingPlatform : MonoBehaviour
     {
         Transform prefab = Instantiate(iceSheet, new Vector3(transform.position.x + 10f, -0.4f, transform.position.z - 10f), Quaternion.identity);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
 
         Destroy(prefab.gameObject);
 
