@@ -101,13 +101,34 @@ public class TerrainEditor : MonoBehaviour
 
     public void ModifyTerrain(int x, int z)
     {
-        if(x + sampleWidth <= 512 && z + sampleHeight <= 512)
-        {
-            splat = targetT.terrainData.GetAlphamaps(x, z, sampleWidth, sampleHeight);
 
-            for(int k = 0; k < sampleWidth; k++)
+        int width, height;
+
+        if(x + sampleWidth <= 512)
+        {
+            width = sampleWidth;
+        }
+        else
+        {
+            width = 512 - x;
+        }
+
+        if(z + sampleHeight <= 512)
+        {
+            height = sampleHeight;
+        }
+        else
+        {
+            height = 512 - z;
+        }
+
+        if(width != 0 && height != 0)
+        {
+            splat = targetT.terrainData.GetAlphamaps(x, z, width, height);
+
+            for(int k = 0; k < height; k++)
             {
-                for(int j = 0; j < sampleHeight; j++)
+                for(int j = 0; j < width; j++)
                 {
                     for(int i = 0; i <= 2; i++)
                     {
@@ -129,7 +150,6 @@ public class TerrainEditor : MonoBehaviour
             // remove ice after a certain amount of time
             StartCoroutine(RemoveIce(targetT, "TerrainBackups/" + targetT.terrainData.name + "_backup", x, z));
         }
-       
     }
 
     IEnumerator RemoveIce(Terrain t, String dataName, int x, int z)           
