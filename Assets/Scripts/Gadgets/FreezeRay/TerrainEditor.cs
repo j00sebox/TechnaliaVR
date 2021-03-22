@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class TerrainEditor : MonoBehaviour
 {
@@ -11,10 +12,10 @@ public class TerrainEditor : MonoBehaviour
     int terrainHeightMapWidth;
     int terrainHeightMapHeight;
     TerrainData terrainData;
-    float[,,] splat;
+    TerrainData orig;
     int sampleWidth = 10;
     int sampleHeight = 10;
-
+    float[,,] splat;
     int iceLayer = 2;
 
     public Terrain GetTerrainAtObject(GameObject gameObject)
@@ -124,8 +125,20 @@ public class TerrainEditor : MonoBehaviour
             }
 
             targetT.terrainData.SetAlphamaps(x, z, splat);
+
+            // remove ice after a certain amount of time
+            StartCoroutine(RemoveIce(targetT, "TerrainBackups/" + targetT.terrainData.name + "_backup", x, z));
         }
        
+    }
+
+    IEnumerator RemoveIce(Terrain t, String dataName, int x, int z)           
+    {
+        yield return new WaitForSeconds(60);
+        // load the original terraindata
+        orig = Resources.Load<TerrainData>(dataName);
+        // set the patch of ice that was made previously to be the same terrain that is in the original
+        t.terrainData.SetAlphamaps(x, z, orig.GetAlphamaps(x, z, sampleWidth, sampleHeight));
     }
 
     // uses the world to terrain coordinates to determine if the player is currently standing over an ice texture

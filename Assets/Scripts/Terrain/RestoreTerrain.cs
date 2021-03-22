@@ -15,7 +15,7 @@ public class RestoreTerrain : MonoBehaviour
 
         td1 = terrain.terrainData;
 
-        // everytime the player modifies the world byt putting ice down it needs to be reset at the end
+        // everytime the player modifies the world by putting ice down it needs to be reset at the end
         // this is accomplished by saving the terrain data a the start
         File.Copy("./Assets/Resources/Terrain/" + td1.name + ".asset", "./Assets/Resources/TerrainBackups/" + td1.name + "_backup.asset", true);
 

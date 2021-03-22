@@ -81,9 +81,10 @@ public class ShootIce : MonoBehaviour
 
                         // convert player world coordinates into terrain coordinates
                         editor.GetCoords(hit, out int terX, out int terZ);
-
+        
                         // produce ice at specified terrain coordinates
                         editor.ModifyTerrain(terX, terZ);
+        
                     }
                 }
             }
