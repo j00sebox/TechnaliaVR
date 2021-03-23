@@ -20,6 +20,10 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 7f;
 
+    float jumpMod;
+
+    bool charging = false;
+
     public bool springBoots = false;
 
     float speed;
@@ -90,10 +94,8 @@ public class PlayerMovement : MonoBehaviour
                 onIce = false;
             }
 
-            
-
-            // if any of these keys are pressed appropriate animations should play
-            if(z != 0 || x != 0)
+            // if the player is moving on the ground there should be footstep sounds
+            if( (z != 0 || x != 0) && controller.isGrounded)
             {
                 // play different sound effects if the player is currently moving on sand vs ice
                 if(onIce)
@@ -147,12 +149,20 @@ public class PlayerMovement : MonoBehaviour
             
             // character controller handles the movement
             controller.Move(move * speed * Time.deltaTime);
-            
-            // play jump animation and calculate upwards velocity
-            if(Input.GetButtonDown("Jump"))
+
+            if(springBoots)
             {
-                anim.SetTrigger("Jump");
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                if (Input.GetButton("Jump") && !charging)
+                    StartCoroutine(ChargeJump());   
+            }           
+            else
+            {
+                // play jump animation and calculate upwards velocity
+                if(Input.GetButtonDown("Jump"))
+                {
+                    anim.SetTrigger("Jump");
+                    velocity.y = Mathf.Sqrt( (jumpHeight) * -2f * gravity);
+                }
             }
 
             // gradually brings play back to ground
@@ -163,12 +173,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 if(x != 0)
                 {
-                    velocity += transform.right*0.7f*x;
+                    velocity += transform.right*0.5f*x;
                 }
 
                 if(z != 0)
                 {
-                    velocity += transform.forward*0.7f*z;
+                    velocity += transform.forward*0.5f*z;
                 }
             }
             else
@@ -181,6 +191,24 @@ public class PlayerMovement : MonoBehaviour
             // apply the velocity to the player
             controller.Move(velocity * Time.deltaTime);
         }
+    }
+
+    // compress the spring boots to get a larger jump
+    IEnumerator ChargeJump()
+    {
+        charging = true;
+        // while the player is still holding down the jump button increase the height they will jump
+        while(Input.GetButton("Jump"))
+        {
+            jumpMod += 5*Time.deltaTime;
+
+            yield return null;
+        }
+
+        anim.SetTrigger("Jump");
+        velocity.y = Mathf.Sqrt( (jumpHeight + jumpMod) * -2f * gravity);
+        jumpMod = 0f;
+        charging = false;
     }
 }
 
