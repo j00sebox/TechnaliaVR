@@ -159,7 +159,15 @@ public class PlayerMovement : MonoBehaviour
             // if player is on ice then they gradually gain speed
             if(onIce)
             {
-                velocity += transform.forward*0.7f*z;
+                if(x != 0)
+                {
+                    velocity += transform.right*0.7f*x;
+                }
+
+                if(z != 0)
+                {
+                    velocity += transform.forward*0.7f*z;
+                }
             }
             else
             {

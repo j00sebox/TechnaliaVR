@@ -148,17 +148,18 @@ public class TerrainEditor : MonoBehaviour
             targetT.terrainData.SetAlphamaps(x, z, splat);
 
             // remove ice after a certain amount of time
-            StartCoroutine(RemoveIce(targetT, "TerrainBackups/" + targetT.terrainData.name + "_backup", x, z));
+            StartCoroutine(RemoveIce(targetT, "TerrainBackups/" + targetT.terrainData.name + "_backup", x, z, width, height));
         }
     }
 
-    IEnumerator RemoveIce(Terrain t, String dataName, int x, int z)           
+    IEnumerator RemoveIce(Terrain t, String dataName, int x, int z, int width, int height)           
     {
         yield return new WaitForSeconds(60);
         // load the original terraindata
         orig = Resources.Load<TerrainData>(dataName);
+
         // set the patch of ice that was made previously to be the same terrain that is in the original
-        t.terrainData.SetAlphamaps(x, z, orig.GetAlphamaps(x, z, sampleWidth, sampleHeight));
+        t.terrainData.SetAlphamaps(x, z, orig.GetAlphamaps(x, z, width, height));
     }
 
     // uses the world to terrain coordinates to determine if the player is currently standing over an ice texture
