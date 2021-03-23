@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 7f;
 
+    public bool springBoots = false;
+
     float speed;
 
     Vector3 velocity;
