@@ -122,9 +122,23 @@ public class TerrainEditor : MonoBehaviour
             height = 512 - z;
         }
 
+        int newx = x - width/2;
+
+        if (newx < 0)
+        {
+            newx = x;
+        }
+
+        int newz = z - height/2;
+
+        if (newz < 0)
+        {
+            newz = z;
+        }
+
         if(width != 0 && height != 0)
         {
-            splat = targetT.terrainData.GetAlphamaps(x, z, width, height);
+            splat = targetT.terrainData.GetAlphamaps(newx, newz, width, height);
 
             for(int k = 0; k < height; k++)
             {
@@ -132,7 +146,7 @@ public class TerrainEditor : MonoBehaviour
                 {
                     for(int i = 0; i <= 2; i++)
                     {
-                        if(i == 2)
+                        if(i == iceLayer)
                         {
                             splat[k, j, i] = 1;
                         }
@@ -145,10 +159,10 @@ public class TerrainEditor : MonoBehaviour
                 }
             }
 
-            targetT.terrainData.SetAlphamaps(x, z, splat);
+            targetT.terrainData.SetAlphamaps(newx, newz, splat);
 
             // remove ice after a certain amount of time
-            StartCoroutine(RemoveIce(targetT, "TerrainBackups/" + targetT.terrainData.name + "_backup", x, z, width, height));
+            StartCoroutine(RemoveIce(targetT, "TerrainBackups/" + targetT.terrainData.name + "_backup", newx, newz, width, height));
         }
     }
 
@@ -161,7 +175,6 @@ public class TerrainEditor : MonoBehaviour
         // set the patch of ice that was made previously to be the same terrain that is in the original
         t.terrainData.SetAlphamaps(x, z, orig.GetAlphamaps(x, z, width, height));
     }
-
     // uses the world to terrain coordinates to determine if the player is currently standing over an ice texture
     public bool CheckIce(int x, int z)
     {

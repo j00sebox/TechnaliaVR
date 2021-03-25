@@ -175,17 +175,30 @@ public class PlayerMovement : MonoBehaviour
                 {
                     velocity += transform.right*0.5f*x;
                 }
+                else
+                {
+                    velocity.x *= 99f/100f;
+                }
 
                 if(z != 0)
                 {
                     velocity += transform.forward*0.5f*z;
                 }
+                else
+                {
+                    velocity.z *= 99f/100f;
+                }
+            }
+            else if(!controller.isGrounded)
+            {
+                velocity.x *= 95f/100f;
+                velocity.z *= 95f/100f;
             }
             else
             {
                 // this will gradually slow down the player
-                velocity.x *= 90f/100f;
-                velocity.z *= 90f/100f;
+                velocity.x *= 75f/100f;
+                velocity.z *= 75f/100f;
             }
 
             // apply the velocity to the player
