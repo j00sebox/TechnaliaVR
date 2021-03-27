@@ -144,12 +144,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            // move forwards/backwards with z and left/right with x
-            Vector3 move = transform.right * x + transform.forward * z;
-            
-            // character controller handles the movement
-            controller.Move(move * speed * Time.deltaTime);
-
             if(springBoots)
             {
                 if (Input.GetButton("Jump") && !charging)
@@ -164,6 +158,14 @@ public class PlayerMovement : MonoBehaviour
                     velocity.y = Mathf.Sqrt( (jumpHeight) * -2f * gravity);
                 }
             }
+
+            /**********************MOVEMENT**********************/
+
+            // move forwards/backwards with z and left/right with x
+            Vector3 move = transform.right * x + transform.forward * z;
+            
+            // character controller handles the movement
+            controller.Move(move * speed * Time.deltaTime);
 
             // gradually brings play back to ground
             velocity.y += gravity * Time.deltaTime;
@@ -197,8 +199,8 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 // this will gradually slow down the player
-                velocity.x *= 75f/100f;
-                velocity.z *= 75f/100f;
+                velocity.x *= 50f/100f;
+                velocity.z *= 50f/100f;
             }
 
             // apply the velocity to the player
