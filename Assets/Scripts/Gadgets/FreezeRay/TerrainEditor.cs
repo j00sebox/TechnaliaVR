@@ -93,6 +93,7 @@ public class TerrainEditor : MonoBehaviour
         return Vector3.zero;
     }
 
+    // turn the world coordinates into the indicies of the height/aplha map
     public void GetCoords(RaycastHit hit, out int x, out int z)
     {
         x = (int)( ( ( hit.point.x - targetT.GetPosition().x ) / targetT.terrainData.size.x ) * targetT.terrainData.heightmapResolution );
@@ -103,16 +104,20 @@ public class TerrainEditor : MonoBehaviour
     {
 
         int width, height;
+        // this keeps track of how many cells in each row of the ice patch shouldn't be changed
+        int counter = 2;
 
+        // if this is true the entire sample width can be taken
         if(x + sampleWidth <= 512)
         {
             width = sampleWidth;
         }
-        else
+        else // else the sample width the difference between the edge of the terrain and the hit coordinate
         {
             width = 512 - x;
         }
 
+        // same thing for sample height
         if(z + sampleHeight <= 512)
         {
             height = sampleHeight;
@@ -122,40 +127,60 @@ public class TerrainEditor : MonoBehaviour
             height = 512 - z;
         }
 
-        int newx = x - width/2;
+        // store these as variables for use later
+        int halfw = width/2;
+        int halfh = height/2;
+
+        // this makes it so the ice is centered around the hit point
+        int newx = x - halfw;
 
         if (newx < 0)
         {
             newx = x;
         }
 
-        int newz = z - height/2;
+        int newz = z - halfh;
 
         if (newz < 0)
         {
             newz = z;
         }
 
+        // don't do this if hitpoint is on edge
         if(width != 0 && height != 0)
         {
+            // current terrain splat data
             splat = targetT.terrainData.GetAlphamaps(newx, newz, width, height);
 
             for(int k = 0; k < height; k++)
             {
                 for(int j = 0; j < width; j++)
                 {
-                    for(int i = 0; i <= 2; i++)
+                    // this makes the ice look more deformed instead of square
+                    if( (j-halfw) == 0 || Math.Abs(j-halfw) < counter)
                     {
-                        if(i == iceLayer)
+                        for(int i = 0; i <= 2; i++)
                         {
-                            splat[k, j, i] = 1;
+                            if(i == iceLayer)
+                            {
+                                splat[k, j, i] = 1;
+                            }
+                            else
+                            {
+                                splat[k, j, i] = 0;
+                            }
+                            
                         }
-                        else
-                        {
-                            splat[k, j, i] = 0;
-                        }
-                        
                     }
+                }
+
+                if(k >= halfh)
+                {
+                    counter--;
+                }
+                else
+                {
+                    counter++;
                 }
             }
 
@@ -175,6 +200,7 @@ public class TerrainEditor : MonoBehaviour
         // set the patch of ice that was made previously to be the same terrain that is in the original
         t.terrainData.SetAlphamaps(x, z, orig.GetAlphamaps(x, z, width, height));
     }
+
     // uses the world to terrain coordinates to determine if the player is currently standing over an ice texture
     public bool CheckIce(int x, int z)
     {
