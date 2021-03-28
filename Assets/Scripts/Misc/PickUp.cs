@@ -9,6 +9,8 @@ public class PickUp : MonoBehaviour
 
     bool inrange;
 
+    public static bool isHoldingFreezeRay = false;
+
     public virtual void pick_up_action(Transform player) {}
 
      void OnTriggerEnter(Collider col)
@@ -32,6 +34,7 @@ public class PickUp : MonoBehaviour
                 pickupTxt.enabled = false;
                 pick_up_action(p);
                 Destroy(gameObject);
+                isHoldingFreezeRay = true;
             }
 
             yield return null;
