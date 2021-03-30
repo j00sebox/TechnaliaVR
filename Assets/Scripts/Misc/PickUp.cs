@@ -11,7 +11,7 @@ public class PickUp : MonoBehaviour
 
     public static bool isHoldingFreezeRay = false;
 
-    public virtual void pick_up_action(Transform player) {}
+    public virtual void pick_up_action() {}
 
      void OnTriggerEnter(Collider col)
     {
@@ -21,18 +21,18 @@ public class PickUp : MonoBehaviour
 
             pickupTxt.enabled = true;
 
-            StartCoroutine(whileInRange(col.transform));
+            StartCoroutine(whileInRange());
         }
     }
 
-    IEnumerator whileInRange(Transform p)
+    IEnumerator whileInRange()
     {
         while(inrange)
         {
             if(Input.GetKeyDown(KeyCode.E))
             {
                 pickupTxt.enabled = false;
-                pick_up_action(p);
+                pick_up_action();
                 Destroy(gameObject);
                 isHoldingFreezeRay = true;
             }

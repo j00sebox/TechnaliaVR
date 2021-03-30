@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SB_PickUp : PickUp
 {
-    public override void pick_up_action(Transform player) 
+    public override void pick_up_action() 
     {
-        player.GetComponent<PlayerMovement> ().springBoots = true;
+        GameObject.Find("Protagonist").GetComponent<PlayerMovement> ().springBoots = true;
     }
 }

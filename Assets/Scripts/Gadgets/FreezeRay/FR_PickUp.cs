@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class FR_PickUp : PickUp
 {
-    public Transform dest;
-    public Transform prefab;
-    Transform t;
+    public int index = 0;
+    public GadgetManager gm;
 
-    public override void pick_up_action(Transform player) 
+    public override void pick_up_action() 
     {
         pickupTxt.enabled = false;
-        t = Instantiate(prefab, dest.position, prefab.rotation);
-        t.parent = GameObject.Find("GunHolder").transform;
-        t.rotation = new Quaternion(0, 0, 0, 0);
+        gm.SpawnFR();
+        GadgetManager.gadgets_obtained[index] = true;
     }
 }
