@@ -16,6 +16,8 @@ public class MovingPlatform : MonoBehaviour
 
     public bool powered = true;
 
+    bool hold = false;
+
     float width;
 
     float length;
@@ -33,7 +35,7 @@ public class MovingPlatform : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!iced && powered)
+        if(!iced && powered && !hold)
         {
             // need to check direction to move it
             if(forwards)
@@ -72,6 +74,7 @@ public class MovingPlatform : MonoBehaviour
         // once it has reached the end it has to go to the other extreme
         else 
         {
+            StartCoroutine("PlatformHold");
             forwards = false;
         }
     }
@@ -84,6 +87,7 @@ public class MovingPlatform : MonoBehaviour
         }
         else
         {   
+            StartCoroutine("PlatformHold");
             forwards = true;
         }
     }
@@ -99,6 +103,7 @@ public class MovingPlatform : MonoBehaviour
         // once it has reached the end it has to go to the other extreme
         else 
         {
+            StartCoroutine("PlatformHold");
             forwards = false;
         }
     }
@@ -114,6 +119,7 @@ public class MovingPlatform : MonoBehaviour
         // once it has reached the end it has to go to the other extreme
         else 
         {
+            StartCoroutine("PlatformHold");
             forwards = true;
         }
     }
@@ -133,6 +139,13 @@ public class MovingPlatform : MonoBehaviour
         Destroy(prefab.gameObject);
 
         iced = false;
+    }
+
+    IEnumerator PlatformHold()
+    {
+        hold = true;
+        yield return new WaitForSeconds(1.5f);
+        hold = false;
     }
 
     void OnTriggerEnter(Collider col)
