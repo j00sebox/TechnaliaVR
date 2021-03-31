@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 interpolatedPos;
 
     bool onIce = false;
+    bool webbed = false;
 
     RaycastHit toFloor;
 
@@ -86,6 +87,15 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         onIce = false;
+                    }
+
+                    if(tEdit.CheckWebbed(terX, terZ))
+                    {
+                        webbed = true;
+                    }
+                    else
+                    {
+                        webbed = false;
                     }
                 }
             }
@@ -165,33 +175,37 @@ public class PlayerMovement : MonoBehaviour
             Vector3 move = transform.right * x + transform.forward * z;
             
             // character controller handles the movement
-            if(!onIce)
+            if(!webbed)
                 controller.Move(move * speed * Time.deltaTime);
 
             // gradually brings play back to ground
             velocity.y += gravity * Time.deltaTime;
 
+            if(webbed)
+            {
+                velocity = new Vector3(0,0,0);
+            }
+
             // if player is on ice then they gradually gain speed
             if(onIce)
             {
-                velocity = new Vector3(0, 0, 0);
-                // if(x != 0)
-                // {
-                //     velocity += transform.right*0.5f*x;
-                // }
-                // else
-                // {
-                //     velocity.x *= 99f/100f;
-                // }
+                if(x != 0)
+                {
+                    velocity += transform.right*0.5f*x;
+                }
+                else
+                {
+                    velocity.x *= 99f/100f;
+                }
 
-                // if(z != 0)
-                // {
-                //     velocity += transform.forward*0.5f*z;
-                // }
-                // else
-                // {
-                //     velocity.z *= 99f/100f;
-                // }
+                if(z != 0)
+                {
+                    velocity += transform.forward*0.5f*z;
+                }
+                else
+                {
+                    velocity.z *= 99f/100f;
+                }
             }
             else if(!controller.isGrounded)
             {
@@ -217,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
         // while the player is still holding down the jump button increase the height they will jump
         while(Input.GetButton("Jump"))
         {
-            jumpMod += 5*Time.deltaTime;
+            jumpMod += 12*Time.deltaTime;
 
             yield return null;
         }
@@ -228,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
         // apply the velocity to the player
         controller.Move(velocity * Time.deltaTime);
         charging = false;
-        onIce = false;
+        webbed = false;
     }
 }
 

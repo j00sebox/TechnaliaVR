@@ -222,5 +222,24 @@ public class TerrainEditor : MonoBehaviour
 
         return false;
     }
+
+    // returns the layer that corresponds to the coordinates
+    public bool CheckWebbed(int x, int z)
+    {
+        // this check accounts for boundary cases since we can't do a one offset at the last element
+        if(x != 512 && z != 512)
+        {
+            // samples the 1x1 splatmap of the desired coordinates 
+            splat = targetT.terrainData.GetAlphamaps(x, z, 1, 1);
+
+            // if the player is standing on an ice layer return true
+            if(splat[0, 0, 3] == 1)
+            {
+                return true;
+            }
+        }  
+
+        return false;
+    }
     
 }
