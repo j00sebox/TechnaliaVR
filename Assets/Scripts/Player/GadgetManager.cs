@@ -8,7 +8,7 @@ public class GadgetManager : MonoBehaviour
     static public bool[] gadgets_obtained;
     public Transform[] gadget_prefab;
     public Transform player;
-    int currentSelection = 0;
+    static public int currentSelection = 0;
     
     void Awake()
     {
@@ -61,6 +61,6 @@ public class GadgetManager : MonoBehaviour
 
         current_gadget = Instantiate(gadget_prefab[1], player.position, gadget_prefab[1].rotation);
         current_gadget.parent = player;
-        current_gadget.rotation = new Quaternion(70, 30, 0, 0);
+        current_gadget.rotation = player.rotation * Quaternion.Euler(0, 90, 90);
     }
 }
