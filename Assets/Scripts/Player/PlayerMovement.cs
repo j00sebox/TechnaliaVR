@@ -165,7 +165,8 @@ public class PlayerMovement : MonoBehaviour
             Vector3 move = transform.right * x + transform.forward * z;
             
             // character controller handles the movement
-            controller.Move(move * speed * Time.deltaTime);
+            if(!onIce)
+                controller.Move(move * speed * Time.deltaTime);
 
             // gradually brings play back to ground
             velocity.y += gravity * Time.deltaTime;
@@ -173,23 +174,24 @@ public class PlayerMovement : MonoBehaviour
             // if player is on ice then they gradually gain speed
             if(onIce)
             {
-                if(x != 0)
-                {
-                    velocity += transform.right*0.5f*x;
-                }
-                else
-                {
-                    velocity.x *= 99f/100f;
-                }
+                velocity = new Vector3(0, 0, 0);
+                // if(x != 0)
+                // {
+                //     velocity += transform.right*0.5f*x;
+                // }
+                // else
+                // {
+                //     velocity.x *= 99f/100f;
+                // }
 
-                if(z != 0)
-                {
-                    velocity += transform.forward*0.5f*z;
-                }
-                else
-                {
-                    velocity.z *= 99f/100f;
-                }
+                // if(z != 0)
+                // {
+                //     velocity += transform.forward*0.5f*z;
+                // }
+                // else
+                // {
+                //     velocity.z *= 99f/100f;
+                // }
             }
             else if(!controller.isGrounded)
             {
@@ -223,7 +225,10 @@ public class PlayerMovement : MonoBehaviour
         anim.SetTrigger("Jump");
         velocity.y = Mathf.Sqrt( (jumpHeight + jumpMod) * -2f * gravity);
         jumpMod = 0f;
+        // apply the velocity to the player
+        controller.Move(velocity * Time.deltaTime);
         charging = false;
+        onIce = false;
     }
 }
 
