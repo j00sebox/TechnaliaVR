@@ -24,6 +24,7 @@ public class RestoreTerrain : MonoBehaviour
 
         td2.terrainLayers = td1.terrainLayers;
         td2.SetAlphamaps(0, 0, td1.GetAlphamaps(0, 0, td1.alphamapWidth, td1.alphamapHeight));
+        td2.SetHeights(0, 0, td1.GetHeights(0, 0, td1.heightmapResolution, td1.heightmapResolution));
 
         if (td2 == null) 
         {

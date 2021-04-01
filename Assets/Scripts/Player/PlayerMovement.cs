@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 dir;
 
+    Vector3 dir_right;
+
     bool onIce = false;
     bool webbed = false;
 
@@ -93,7 +95,8 @@ public class PlayerMovement : MonoBehaviour
 
                     if(angle > 45)
                     {
-                        dir = Vector3.Cross(terrainNormal, Vector3.right);
+                        dir_right = Vector3.Cross(terrainNormal, Vector3.up);
+                        dir = Vector3.Cross(terrainNormal, dir_right);
                     }
                     else
                     {
@@ -117,6 +120,10 @@ public class PlayerMovement : MonoBehaviour
                     {
                         webbed = false;
                     }
+                }
+                else
+                {
+                    dir = Vector3.zero;
                 }
             }
             else
