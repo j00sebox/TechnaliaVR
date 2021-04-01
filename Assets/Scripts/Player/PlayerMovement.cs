@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -31,6 +32,12 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
 
     Vector3 interpolatedPos;
+
+    Vector3 terrainNormal;
+
+    Vector3 slope;
+
+    Vector3 dir;
 
     bool onIce = false;
     bool webbed = false;
@@ -68,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
             float z = Input.GetAxis("Vertical");
 
             // raycast from player to the ground to determine what kind of terrain they are on 
-            if (Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.up), out toFloor, 1, layerMask))
+            if (Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.up), out toFloor, 1f, layerMask))
             {
                 // get current terrain object player is standing on, if none returns null
                 terrain = tEdit.GetTerrainAtObject(toFloor.transform.gameObject);
@@ -79,6 +86,21 @@ public class PlayerMovement : MonoBehaviour
 
                     // get heightmap coords
                     tEdit.GetCoords(toFloor, out int terX, out int terZ);
+
+                    terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (toFloor.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (toFloor.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
+
+                    float angle = Vector3.Angle(terrainNormal, transform.up);
+
+                    Debug.Log(angle);
+
+                    if(angle > 45)
+                    {
+                        dir = Vector3.Cross(terrainNormal, Vector3.right);
+                    }
+                    else
+                    {
+                        dir = Vector3.zero;
+                    }
 
                     if(tEdit.CheckIce(terX, terZ))
                     {
@@ -101,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                dir = Vector3.zero;
                 onIce = false;
             }
 
@@ -177,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
             // character controller handles the movement
             if(!webbed)
                 controller.Move(move * speed * Time.deltaTime);
+                controller.Move(dir * speed * Time.deltaTime);
 
             // gradually brings play back to ground
             velocity.y += gravity * Time.deltaTime;
