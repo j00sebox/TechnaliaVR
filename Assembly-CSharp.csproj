@@ -38,7 +38,6 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Gadgets\FreezeRay\FR_PickUp.cs" />
      <Compile Include="Assets\Scripts\Gadgets\FreezeRay\ShootIce.cs" />
-     <Compile Include="Assets\Scripts\Gadgets\FreezeRay\TerrainEditor.cs" />
      <Compile Include="Assets\Scripts\Gadgets\SpringBoots\SB_PickUp.cs" />
      <Compile Include="Assets\Scripts\Gadgets\WebCannon\ShootWeb.cs" />
      <Compile Include="Assets\Scripts\Gadgets\WebCannon\WC_PickUp.cs" />
@@ -48,7 +47,6 @@
      <Compile Include="Assets\Scripts\Misc\PauseManager.cs" />
      <Compile Include="Assets\Scripts\Misc\PickUp.cs" />
      <Compile Include="Assets\Scripts\Misc\ReadPaper.cs" />
-     <Compile Include="Assets\Scripts\Misc\RespawnManager.cs" />
      <Compile Include="Assets\Scripts\Player\GadgetManager.cs" />
      <Compile Include="Assets\Scripts\Player\HandMovement.cs" />
      <Compile Include="Assets\Scripts\Player\LookAround.cs" />
@@ -57,7 +55,10 @@
      <Compile Include="Assets\Scripts\Puzzle\Drown.cs" />
      <Compile Include="Assets\Scripts\Puzzle\FreezePanel.cs" />
      <Compile Include="Assets\Scripts\Puzzle\MovingPlatform.cs" />
+     <Compile Include="Assets\Scripts\Respawn\RespawnManager.cs" />
+     <Compile Include="Assets\Scripts\Respawn\RespawnModifier.cs" />
      <Compile Include="Assets\Scripts\Terrain\RestoreTerrain.cs" />
+     <Compile Include="Assets\Scripts\Terrain\TerrainEditor.cs" />
      <Compile Include="Assets\Scripts\UI\ControlsToMenu.cs" />
      <Compile Include="Assets\Scripts\UI\MenuToControls.cs" />
      <Compile Include="Assets\Scripts\UI\QuitButton.cs" />
