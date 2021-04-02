@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -32,7 +33,14 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 interpolatedPos;
 
+    Vector3 terrainNormal;
+
+    Vector3 slope;
+
+    Vector3 dir;
+
     bool onIce = false;
+    bool webbed = false;
 
     RaycastHit toFloor;
 
@@ -67,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
             float z = Input.GetAxis("Vertical");
 
             // raycast from player to the ground to determine what kind of terrain they are on 
-            if (Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.up), out toFloor, 1, layerMask))
+            if (Physics.Raycast(transform.position, -transform.up, out toFloor, 1f, layerMask))
             {
                 // get current terrain object player is standing on, if none returns null
                 terrain = tEdit.GetTerrainAtObject(toFloor.transform.gameObject);
@@ -79,6 +87,19 @@ public class PlayerMovement : MonoBehaviour
                     // get heightmap coords
                     tEdit.GetCoords(toFloor, out int terX, out int terZ);
 
+                    terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (toFloor.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (toFloor.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
+
+                    float angle = Vector3.Angle(terrainNormal, transform.up);
+
+                    if(angle > 45)
+                    {
+                        dir = Vector3.Cross(terrainNormal, Vector3.right);
+                    }
+                    else
+                    {
+                        dir = Vector3.zero;
+                    }
+
                     if(tEdit.CheckIce(terX, terZ))
                     {
                         onIce = true;
@@ -87,10 +108,20 @@ public class PlayerMovement : MonoBehaviour
                     {
                         onIce = false;
                     }
+
+                    if(tEdit.CheckWebbed(terX, terZ))
+                    {
+                        webbed = true;
+                    }
+                    else
+                    {
+                        webbed = false;
+                    }
                 }
             }
             else
             {
+                dir = Vector3.zero;
                 onIce = false;
             }
 
@@ -165,10 +196,19 @@ public class PlayerMovement : MonoBehaviour
             Vector3 move = transform.right * x + transform.forward * z;
             
             // character controller handles the movement
-            controller.Move(move * speed * Time.deltaTime);
+            if(!webbed)
+            {
+                controller.Move(move * speed * Time.deltaTime);
+                controller.Move(dir * speed * Time.deltaTime);
+            }
 
             // gradually brings play back to ground
             velocity.y += gravity * Time.deltaTime;
+
+            if(webbed)
+            {
+                velocity = new Vector3(0,0,0);
+            }
 
             // if player is on ice then they gradually gain speed
             if(onIce)
@@ -215,7 +255,7 @@ public class PlayerMovement : MonoBehaviour
         // while the player is still holding down the jump button increase the height they will jump
         while(Input.GetButton("Jump"))
         {
-            jumpMod += 5*Time.deltaTime;
+            jumpMod += 12*Time.deltaTime;
 
             yield return null;
         }
@@ -223,7 +263,10 @@ public class PlayerMovement : MonoBehaviour
         anim.SetTrigger("Jump");
         velocity.y = Mathf.Sqrt( (jumpHeight + jumpMod) * -2f * gravity);
         jumpMod = 0f;
+        // apply the velocity to the player
+        controller.Move(velocity * Time.deltaTime);
         charging = false;
+        webbed = false;
     }
 }
 

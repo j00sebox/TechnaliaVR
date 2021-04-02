@@ -22,6 +22,9 @@ public class RestoreTerrain : MonoBehaviour
         string dataName = "TerrainBackups/" + td1.name + "_backup";
         td2 = Resources.Load<TerrainData>(dataName);
 
+        td2.terrainLayers = td1.terrainLayers;
+        td2.SetAlphamaps(0, 0, td1.GetAlphamaps(0, 0, td1.alphamapWidth, td1.alphamapHeight));
+
         if (td2 == null) 
         {
             Debug.LogError("Terrain with that name does not exist");
