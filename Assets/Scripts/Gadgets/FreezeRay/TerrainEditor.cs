@@ -100,6 +100,12 @@ public class TerrainEditor : MonoBehaviour
         z = (int)( ( ( hit.point.z - targetT.GetPosition().z ) / targetT.terrainData.size.z ) * targetT.terrainData.heightmapResolution );
     }
 
+    public void GetCoords(Vector3 hit, out int x, out int z)
+    {
+        x = (int)( ( ( hit.x - targetT.GetPosition().x ) / targetT.terrainData.size.x ) * targetT.terrainData.heightmapResolution );
+        z = (int)( ( ( hit.z - targetT.GetPosition().z ) / targetT.terrainData.size.z ) * targetT.terrainData.heightmapResolution );
+    }
+
     public void ModifyTerrain(int x, int z, int layer)
     {
 
@@ -208,7 +214,7 @@ public class TerrainEditor : MonoBehaviour
     public bool CheckIce(int x, int z)
     {
         // this check accounts for boundary cases since we can't do a one offset at the last element
-        if(x != 512 && z != 512)
+        if(x < 512 && z < 512)
         {
             // samples the 1x1 splatmap of the desired coordinates 
             splat = targetT.terrainData.GetAlphamaps(x, z, 1, 1);
@@ -227,7 +233,7 @@ public class TerrainEditor : MonoBehaviour
     public bool CheckWebbed(int x, int z)
     {
         // this check accounts for boundary cases since we can't do a one offset at the last element
-        if(x != 512 && z != 512)
+        if(x < 512 && z < 512)
         {
             // samples the 1x1 splatmap of the desired coordinates 
             splat = targetT.terrainData.GetAlphamaps(x, z, 1, 1);
