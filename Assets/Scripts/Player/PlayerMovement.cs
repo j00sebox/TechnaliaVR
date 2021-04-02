@@ -25,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
 
     bool charging = false;
 
+    // this makes sure only one Move call updates the collision with the terrains
+    bool first_col = false;
+
     public bool springBoots = false;
 
     float speed;
@@ -38,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 slope;
 
     Vector3 dir;
+
+    Vector3 dir_right;
 
     bool onIce = false;
     bool webbed = false;
@@ -69,61 +74,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 velocity.y = 0;
             }
+            else
+            {
+                dir = Vector3.zero;
+            }
 
             // get inputs from WASD keys
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
-
-            // raycast from player to the ground to determine what kind of terrain they are on 
-            if (Physics.Raycast(transform.position, -transform.up, out toFloor, 1f, layerMask))
-            {
-                // get current terrain object player is standing on, if none returns null
-                terrain = tEdit.GetTerrainAtObject(toFloor.transform.gameObject);
-
-                if(terrain != null)
-                {
-                    tEdit.SetEditValues(terrain);
-
-                    // get heightmap coords
-                    tEdit.GetCoords(toFloor, out int terX, out int terZ);
-
-                    terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (toFloor.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (toFloor.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
-
-                    float angle = Vector3.Angle(terrainNormal, transform.up);
-
-                    if(angle > 45)
-                    {
-                        dir = Vector3.Cross(terrainNormal, Vector3.right);
-                    }
-                    else
-                    {
-                        dir = Vector3.zero;
-                    }
-
-                    if(tEdit.CheckIce(terX, terZ))
-                    {
-                        onIce = true;
-                    }
-                    else
-                    {
-                        onIce = false;
-                    }
-
-                    if(tEdit.CheckWebbed(terX, terZ))
-                    {
-                        webbed = true;
-                    }
-                    else
-                    {
-                        webbed = false;
-                    }
-                }
-            }
-            else
-            {
-                dir = Vector3.zero;
-                onIce = false;
-            }
 
             // if the player is moving on the ground there should be footstep sounds
             if( (z != 0 || x != 0) && controller.isGrounded)
@@ -198,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
             // character controller handles the movement
             if(!webbed)
             {
+                first_col = true;
                 controller.Move(move * speed * Time.deltaTime);
                 controller.Move(dir * speed * Time.deltaTime);
             }
@@ -245,6 +204,8 @@ public class PlayerMovement : MonoBehaviour
 
             // apply the velocity to the player
             controller.Move(velocity * Time.deltaTime);
+
+            
         }
     }
 
@@ -268,6 +229,61 @@ public class PlayerMovement : MonoBehaviour
         charging = false;
         webbed = false;
     }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.collider.tag == "Ground")
+        {
+            if(first_col)
+            {
+                terrain = tEdit.GetTerrainAtObject(hit.collider.gameObject);
+
+                dir = Vector3.zero;
+                onIce = false;
+                webbed = false;
+
+                if(terrain != null)
+                {
+                    tEdit.SetEditValues(terrain);
+
+                    // get heightmap coords
+                    tEdit.GetCoords(hit.point, out int terX, out int terZ);
+
+                    terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (hit.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (hit.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
+
+                    float angle = Vector3.Angle(terrainNormal, Vector3.up);
+
+                    if(angle > 45)
+                    {
+                        dir_right = Vector3.Cross(terrainNormal, Vector3.up);
+                        dir = Vector3.Cross(terrainNormal, dir_right);
+                    }
+
+                    if(tEdit.CheckIce(terX, terZ))
+                    {
+                        onIce = true;
+                    }
+
+                    if(tEdit.CheckWebbed(terX, terZ))
+                    {
+                        webbed = true;
+                    }
+                }
+
+                first_col = false;
+            }
+            else
+                return;
+            
+        }
+        else
+        {
+            dir = Vector3.zero;
+            onIce = false;
+            webbed = false;
+        }
+    }
+    
 }
 
 
