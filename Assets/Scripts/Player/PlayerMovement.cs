@@ -74,54 +74,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 velocity.y = 0;
             }
+            else
+            {
+                dir = Vector3.zero;
+            }
 
             // get inputs from WASD keys
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
-
-            // raycast from player to the ground to determine what kind of terrain they are on 
-            if (Physics.Raycast(transform.position, -transform.up, out toFloor, 1f, layerMask))
-            {
-                // get current terrain object player is standing on, if none returns null
-                //terrain = tEdit.GetTerrainAtObject(toFloor.transform.gameObject);
-
-                if(terrain != null)
-                {
-                    //tEdit.SetEditValues(terrain);
-
-                    // get heightmap coords
-                    //tEdit.GetCoords(toFloor, out int terX, out int terZ);
-
-                    // terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (toFloor.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (toFloor.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
-
-                    // float angle = Vector3.Angle(terrainNormal, transform.up);
-
-                    
-
-                    // if(tEdit.CheckIce(terX, terZ))
-                    // {
-                    //     onIce = true;
-                    // }
-                    // else
-                    // {
-                    //     onIce = false;
-                    // }
-
-                    // if(tEdit.CheckWebbed(terX, terZ))
-                    // {
-                    //     webbed = true;
-                    // }
-                    // else
-                    // {
-                    //     webbed = false;
-                    // }
-                }
-            }
-            else
-            {
-                //dir = Vector3.zero;
-                // onIce = false;
-            }
 
             // if the player is moving on the ground there should be footstep sounds
             if( (z != 0 || x != 0) && controller.isGrounded)
@@ -289,8 +249,6 @@ public class PlayerMovement : MonoBehaviour
                     // get heightmap coords
                     tEdit.GetCoords(hit.point, out int terX, out int terZ);
 
-                    Debug.Log(terX + " " + terZ);
-
                     terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (hit.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (hit.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
 
                     float angle = Vector3.Angle(terrainNormal, Vector3.up);
@@ -318,7 +276,14 @@ public class PlayerMovement : MonoBehaviour
                 return;
             
         }
+        else
+        {
+            dir = Vector3.zero;
+            onIce = false;
+            webbed = false;
+        }
     }
+    
 }
 
 

@@ -5,14 +5,13 @@ using UnityEngine;
 public class Drown : MonoBehaviour
 {
 
-    public Transform respawn;
+    public RespawnManager rm;
 
     void OnTriggerEnter(Collider col)
     {
-        
         if(col.tag == "Player")
         {
-            col.transform.position = respawn.position;
+            col.transform.position = rm.activeRespawn.position;
         }
     }
 }
