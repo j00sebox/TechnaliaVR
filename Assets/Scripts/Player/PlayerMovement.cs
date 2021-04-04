@@ -193,8 +193,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if(!controller.isGrounded)
             {
-                velocity.x *= 97f/100f;
-                velocity.z *= 97f/100f;
+                velocity.x *= 0.97f;
+                velocity.z *= 0.97f;
             }
             else
             {
@@ -216,7 +216,11 @@ public class PlayerMovement : MonoBehaviour
         // while the player is still holding down the jump button increase the height they will jump
         while(Input.GetButton("Jump"))
         {
-            jumpMod += 12*Time.deltaTime;
+            if(jumpMod<40) {
+                jumpMod += 18*Time.deltaTime;
+            }
+
+            Debug.Log("jumpMod: " + jumpMod);
             
             yield return null;
         }
