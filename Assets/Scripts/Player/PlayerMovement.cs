@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 dir_right;
 
     bool onIce = false;
-    bool webbed = false;
+    public bool webbed = false;
 
     RaycastHit toFloor;
 
@@ -77,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 dir = Vector3.zero;
+                onIce = false;
             }
 
             // get inputs from WASD keys
@@ -192,19 +193,18 @@ public class PlayerMovement : MonoBehaviour
             }
             else if(!controller.isGrounded)
             {
-                velocity.x *= 95f/100f;
-                velocity.z *= 95f/100f;
+                velocity.x *= 97f/100f;
+                velocity.z *= 97f/100f;
             }
             else
             {
                 // this will gradually slow down the player
-                velocity.x *= 50f/100f;
-                velocity.z *= 50f/100f;
+                velocity.x = 0f;
+                velocity.z = 0f;
             }
 
             // apply the velocity to the player
             controller.Move(velocity * Time.deltaTime);
-
             
         }
     }
@@ -217,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
         while(Input.GetButton("Jump"))
         {
             jumpMod += 12*Time.deltaTime;
-
+            
             yield return null;
         }
 
