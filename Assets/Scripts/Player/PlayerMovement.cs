@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 dir_right;
 
     bool onIce = false;
-    bool webbed = false;
+    public bool webbed = false;
 
     RaycastHit toFloor;
 
@@ -217,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
         while(Input.GetButton("Jump"))
         {
             jumpMod += 12*Time.deltaTime;
-
+            
             yield return null;
         }
 
