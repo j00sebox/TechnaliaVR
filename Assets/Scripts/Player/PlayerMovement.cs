@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float walkSpeed = 9f;
     public float sprintSpeed = 14f;
-    public float gravity = -9.81f;
+    public static float gravity = -9.81f;
     public float jumpHeight = 7f;
 
     float jumpMod;
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     float speed;
 
-    Vector3 velocity;
+    public static Vector3 velocity;
 
     Vector3 interpolatedPos;
 
