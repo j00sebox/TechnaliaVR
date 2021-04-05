@@ -216,8 +216,8 @@ public class PlayerMovement : MonoBehaviour
         // while the player is still holding down the jump button increase the height they will jump
         while(Input.GetButton("Jump"))
         {
-            if(jumpMod<40) {
-                jumpMod += 18*Time.deltaTime;
+            if(jumpMod<45) {
+                jumpMod += 24*Time.deltaTime;
             }
 
             Debug.Log("jumpMod: " + jumpMod);
