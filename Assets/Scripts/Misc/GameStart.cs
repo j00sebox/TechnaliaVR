@@ -12,6 +12,8 @@ public class GameStart : MonoBehaviour
 
     void Start()
     {
+        PauseManager.paused = true;
+
         planeCrash = GetComponent<AudioSource> ();
 
         planeCrash.Play();
@@ -28,6 +30,8 @@ public class GameStart : MonoBehaviour
         }
 
         anim.SetTrigger("FadeIn");
+
+        PauseManager.paused = false;
 
         backgroundNoise.Play();
     }
