@@ -6,6 +6,8 @@ public class MovingPlatform : MonoBehaviour
 {
     public float movementSpeed = 1f;
 
+    public float backwardsMovementSpeed = 0f;
+
     public int range = 50;
 
     public Transform iceSheet;
@@ -66,10 +68,16 @@ public class MovingPlatform : MonoBehaviour
     void posxDir()
     {
         // if the platform hasn't reached the desired location keep moving it
+        
         if(transform.position.x < origin.x + range)
         {
+            if(backwardsMovementSpeed != 0) {
             // increment by the movement speed
-            transform.position = new Vector3((transform.position.x + movementSpeed), transform.position.y, transform.position.z);
+                transform.position = new Vector3((transform.position.x + backwardsMovementSpeed), transform.position.y, transform.position.z);
+            } else {
+                transform.position = new Vector3((transform.position.x + movementSpeed), transform.position.y, transform.position.z);
+
+            }
         }
         // once it has reached the end it has to go to the other extreme
         else 
@@ -83,7 +91,9 @@ public class MovingPlatform : MonoBehaviour
     {
         if(transform.position.x > origin.x - range)
         {
+ 
             transform.position = new Vector3((transform.position.x - movementSpeed), transform.position.y, transform.position.z);
+            
         }
         else
         {   
