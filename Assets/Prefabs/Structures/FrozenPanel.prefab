@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7652545955176441475}
   - component: {fileID: 650912697252141411}
   - component: {fileID: 791937741507658665}
-  - component: {fileID: 2346516495292101606}
   m_Layer: 8
   m_Name: FrozenPanel
   m_TagString: SolarPanel
@@ -317,25 +316,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &2346516495292101606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648164636142662382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de7e0760bc37eb34196ba9e4577e7f5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  iceSheet: {fileID: 5125719640124070118, guid: 5e2cd26b14220b94e8203890062acaff,
-    type: 3}
-  frozen: 0
 --- !u!1 &1682616677679144492
 GameObject:
   m_ObjectHideFlags: 0

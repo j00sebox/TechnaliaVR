@@ -219,8 +219,6 @@ public class PlayerMovement : MonoBehaviour
             if(jumpMod<45) {
                 jumpMod += 24*Time.deltaTime;
             }
-
-            Debug.Log("jumpMod: " + jumpMod);
             
             yield return null;
         }

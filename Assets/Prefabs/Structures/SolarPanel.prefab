@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2997147716651880357}
   - component: {fileID: 3057107966967928175}
   - component: {fileID: 1284711712}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SolarPanel
   m_TagString: SolarPanel
   m_Icon: {fileID: 0}
@@ -345,7 +345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3805030264631130378}
   - component: {fileID: 6850964057073780883}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Point Light (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4244328815802437644}
   - component: {fileID: 2475071544445979143}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9179779193575472147}
   - component: {fileID: 1055093289600082801}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Point Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -621,7 +621,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5641380220712767160}
   - component: {fileID: 2353118923948802981}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Point Light (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

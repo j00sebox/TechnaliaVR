@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1947876065255573674}
   - component: {fileID: 1947876065255573669}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RedLight (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1947876065336503300}
   - component: {fileID: 1947876065336503303}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RedLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1947876066667861985}
   - component: {fileID: 1947876066667861984}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RedLight (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 1947876066681951585}
   - component: {fileID: 1947876066681951590}
   - component: {fileID: 1947876066681951591}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Platform
   m_TagString: MovingPlat
   m_Icon: {fileID: 0}
@@ -601,7 +601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1947876067006243086}
   - component: {fileID: 1947876067006243081}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RedLight (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
