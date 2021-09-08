@@ -29,21 +29,21 @@ public class ReadPaper : MonoBehaviour
     {
         while(inrange)
         {
-            if(Input.GetKeyDown(KeyCode.E))
-            {
-                if(PauseManager.reading)
-                {
-                    entry.SetActive(false);
-                    read.enabled = true;
-                    PauseManager.reading = false;
-                }
-                else
-                {
-                    PauseManager.reading = true;
-                    entry.SetActive(true);
-                    read.enabled = false;
-                }
-            }
+            // if(Input.GetKeyDown(KeyCode.E))
+            // {
+            //     if(PauseManager.reading)
+            //     {
+            //         entry.SetActive(false);
+            //         read.enabled = true;
+            //         PauseManager.reading = false;
+            //     }
+            //     else
+            //     {
+            //         PauseManager.reading = true;
+            //         entry.SetActive(true);
+            //         read.enabled = false;
+            //     }
+            // }
 
             yield return null;
         }

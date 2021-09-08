@@ -19,29 +19,29 @@ public class GadgetManager : MonoBehaviour
     void Update()
     {
         // select gadget to use
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            if(currentSelection != 0)
-            {
-                currentSelection = 0;
-                if(gadgets_obtained[currentSelection])
-                {
-                    SpawnFR();
-                }
-            }
+        // if(Input.GetKeyDown(KeyCode.Alpha1))
+        // {
+        //     if(currentSelection != 0)
+        //     {
+        //         currentSelection = 0;
+        //         if(gadgets_obtained[currentSelection])
+        //         {
+        //             SpawnFR();
+        //         }
+        //     }
         
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if(currentSelection != 1)
-            {
-                currentSelection = 1;
-                if(gadgets_obtained[currentSelection])
-                {   
-                    SpawnWC();
-                }
-            }
-        }
+        // }
+        // else if(Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     if(currentSelection != 1)
+        //     {
+        //         currentSelection = 1;
+        //         if(gadgets_obtained[currentSelection])
+        //         {   
+        //             SpawnWC();
+        //         }
+        //     }
+        // }
     }
 
     public void SpawnFR()

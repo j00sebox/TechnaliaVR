@@ -29,13 +29,13 @@ public class PickUp : MonoBehaviour
     {
         while(inrange)
         {
-            if(Input.GetKeyDown(KeyCode.E))
-            {
-                pickupTxt.enabled = false;
-                pick_up_action();
-                Destroy(gameObject);
-                isHoldingFreezeRay = true;
-            }
+            // if(Input.GetKeyDown(KeyCode.E))
+            // {
+            //     pickupTxt.enabled = false;
+            //     pick_up_action();
+            //     Destroy(gameObject);
+            //     isHoldingFreezeRay = true;
+            // }
 
             yield return null;
         }

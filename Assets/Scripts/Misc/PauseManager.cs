@@ -14,24 +14,24 @@ public class PauseManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            paused = !paused;
+        // if(Input.GetKeyDown(KeyCode.Escape))
+        // {
+        //     paused = !paused;
 
-            if(controls.gameObject.activeSelf)
-            {
-                // if player wants to exit while controls screen is up it should also close
-                controls.gameObject.SetActive(false);
-            }
-            else
-            {
-                // the visibility of the menu depends on the value of paused
-                menu.gameObject.SetActive(paused);
-            }
+        //     if(controls.gameObject.activeSelf)
+        //     {
+        //         // if player wants to exit while controls screen is up it should also close
+        //         controls.gameObject.SetActive(false);
+        //     }
+        //     else
+        //     {
+        //         // the visibility of the menu depends on the value of paused
+        //         menu.gameObject.SetActive(paused);
+        //     }
             
 
-            UpdateCursorState();
-        }
+        //     UpdateCursorState();
+        // }
     }
 
     public static void UpdateCursorState()
