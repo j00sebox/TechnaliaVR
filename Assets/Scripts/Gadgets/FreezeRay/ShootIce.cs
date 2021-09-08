@@ -10,10 +10,6 @@ public class ShootIce : MonoBehaviour
 
     public Transform iceSheet;
 
-    ParticleSystem ice;
-
-    ParticleSystem.EmissionModule emission;
-
     TerrainEditor editor;
 
     Terrain tob;
@@ -29,28 +25,30 @@ public class ShootIce : MonoBehaviour
     void Start()
     {
         layerMask = LayerMask.GetMask("Ground");
-        ice = GetComponentInChildren<ParticleSystem> ();
-        emission = ice.emission;
         editor = GetComponent<TerrainEditor> ();
         iceAudio = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Shoot()
     {
-        // cast from gun to ground
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 15, layerMask))
-        {
-            // if player decides to shoot freeze ray some prework must be done to change texture of ground
-            if(Input.GetButton("Fire1"))
-            {
-                // turn particle effect on
-                emission.enabled = true;
+        StartCoroutine("Shooting");
+    }
 
-                if(!iceAudio.isPlaying)
-                {
-                    iceAudio.Play();
-                }
+    public void StopShooting()
+    {
+        StopCoroutine("Shooting");
+    }
+
+    IEnumerator Shooting()
+    {
+        while(true)
+        {
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 15, layerMask))
+            {
+                // if(!iceAudio.isPlaying)
+                // {
+                //     iceAudio.Play();
+                // }
 
                 if(hit.collider.tag == "MovingPlat")
                 {
@@ -88,25 +86,13 @@ public class ShootIce : MonoBehaviour
                     }
                 }
             }
-            else
-            {
-                if(iceAudio.isPlaying)
-                {
-                    iceAudio.Stop();
-                }
 
-                emission.enabled = false;
-            }
+            yield return null;
         }
-        else
-        {
-            if(iceAudio.isPlaying)
-            {
-                iceAudio.Stop();
-            }
-            
-            emission.enabled = false;
-        }
-        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
     }
 }

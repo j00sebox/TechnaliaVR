@@ -10,14 +10,24 @@ public class PlayerMovement : MonoBehaviour
     private XRNode _leftInput;
     
     [SerializeField]
-    private float _moveSpeed = 2f;
+    private float _walkSpeed = 5f;
+
+    [SerializeField]
+    private float _maxSpeed = 20f;
+
+    [SerializeField]
+    private float _iceAcceleration = 5.5f;
 
     [SerializeField]
     private float _gravity = -9.81f;
 
     private float _fallingSpeed = 0f;
 
-    CharacterController _cc;
+    private float _moveSpeed;
+
+    private CharacterController _cc;
+
+    private RaycastHit _terrainHitInfo;
 
     private Vector2 _direction;
 
@@ -74,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
         _rig = GetComponent<XRRig>();
         layerMask = LayerMask.GetMask("Ground");
         tEdit = GetComponent<TerrainEditor> ();
+
+        _moveSpeed = _walkSpeed;
     }
 
     // Update is called once per frame
@@ -81,19 +93,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!PauseManager.paused && !PauseManager.reading)
         {
-            // if the player is not in the air set their y velocity to 0
-            if(_cc.isGrounded && velocity.y < 0)
-            {
-                velocity.y = 0;
-            }
-            else
-            {
-                dir = Vector3.zero;
-                onIce = false;
-            }
 
             InputDevice device = InputDevices.GetDeviceAtXRNode(_leftInput);
             device.TryGetFeatureValue(CommonUsages.primary2DAxis, out _direction);
+
+            
 
             // if the player is moving on the ground there should be footstep sounds
             // if( (z != 0 || x != 0) && _cc.isGrounded)
@@ -220,14 +224,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Quaternion headYaw = Quaternion.Euler(0, _rig.cameraGameObject.transform.eulerAngles.y, 0);
-
-        Vector3 v3Dir = headYaw * new Vector3(_direction.x, 0, _direction.y);
-
-        // apply the velocity to the player
-        _cc.Move(v3Dir * Time.fixedDeltaTime * _moveSpeed);
-
-        if(!IsGrounded())
+         if(!IsGrounded())
         {
             _fallingSpeed += _gravity * Time.fixedDeltaTime;
 
@@ -235,15 +232,82 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            CheckTerrain();
             _fallingSpeed = 0f;
         }
+
+        if(onIce)
+        {
+            _moveSpeed += _iceAcceleration * Time.fixedDeltaTime;
+        }
+        else if(_moveSpeed > _walkSpeed)
+        {
+            _moveSpeed -= _iceAcceleration * Time.fixedDeltaTime;
+        }
+
+        Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
+
+        Quaternion headYaw = Quaternion.Euler(0, _rig.cameraGameObject.transform.eulerAngles.y, 0);
+
+        Vector3 v3Dir = headYaw * new Vector3(_direction.x, 0, _direction.y);
+
+        // apply the velocity to the player
+        _cc.Move(v3Dir * Time.fixedDeltaTime * _moveSpeed);
+
+       
     }
 
     private bool IsGrounded()
     {
         Vector3 origin = transform.TransformPoint(_cc.center);
 
-        return Physics.SphereCast(origin, _cc.radius, Vector3.down, out _, _cc.center.y + 0.02f, layerMask);
+        return Physics.SphereCast(origin, _cc.radius, Vector3.down, out _terrainHitInfo, _cc.center.y + 0.01f, layerMask);
+    }
+
+    private void CheckTerrain()
+    {
+        if(_terrainHitInfo.collider.tag == "Ground")
+        {
+            terrain = tEdit.GetTerrainAtObject(_terrainHitInfo.collider.gameObject);
+
+            dir = Vector3.zero;
+            onIce = false;
+            webbed = false;
+
+            if(terrain != null)
+            {
+                tEdit.SetEditValues(terrain);
+
+                // get heightmap coords
+                tEdit.GetCoords(_terrainHitInfo.point, out int terX, out int terZ);
+
+                terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (_terrainHitInfo.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (_terrainHitInfo.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
+
+                float angle = Vector3.Angle(terrainNormal, Vector3.up);
+
+                if(angle > 45)
+                {
+                    dir_right = Vector3.Cross(terrainNormal, Vector3.up);
+                    dir = Vector3.Cross(terrainNormal, dir_right);
+                }
+
+                if(tEdit.CheckIce(terX, terZ))
+                {
+                    onIce = true;
+                }
+
+                if(tEdit.CheckWebbed(terX, terZ))
+                {
+                    webbed = true;
+                }
+            }
+
+            first_col = false;
+        }
+        else
+        {
+            onIce = false;
+        }
     }
 
     // compress the spring boots to get a larger jump
@@ -269,59 +333,63 @@ public class PlayerMovement : MonoBehaviour
         webbed = false;
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if(hit.collider.tag == "Ground")
-        {
-            if(first_col)
-            {
-                terrain = tEdit.GetTerrainAtObject(hit.collider.gameObject);
+    
 
-                dir = Vector3.zero;
-                onIce = false;
-                webbed = false;
+//     void OnControllerColliderHit(ControllerColliderHit hit)
+//     {
 
-                if(terrain != null)
-                {
-                    tEdit.SetEditValues(terrain);
+//         Debug.Log(onIce);
+//         if(hit.collider.tag == "Ground")
+//         {
+//             if(first_col)
+//             {
+//                 terrain = tEdit.GetTerrainAtObject(hit.collider.gameObject);
 
-                    // get heightmap coords
-                    tEdit.GetCoords(hit.point, out int terX, out int terZ);
+//                 dir = Vector3.zero;
+//                 onIce = false;
+//                 webbed = false;
 
-                    terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (hit.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (hit.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
+//                 if(terrain != null)
+//                 {
+//                     tEdit.SetEditValues(terrain);
 
-                    float angle = Vector3.Angle(terrainNormal, Vector3.up);
+//                     // get heightmap coords
+//                     tEdit.GetCoords(hit.point, out int terX, out int terZ);
 
-                    if(angle > 45)
-                    {
-                        dir_right = Vector3.Cross(terrainNormal, Vector3.up);
-                        dir = Vector3.Cross(terrainNormal, dir_right);
-                    }
+//                     terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (hit.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (hit.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
 
-                    if(tEdit.CheckIce(terX, terZ))
-                    {
-                        onIce = true;
-                    }
+//                     float angle = Vector3.Angle(terrainNormal, Vector3.up);
 
-                    if(tEdit.CheckWebbed(terX, terZ))
-                    {
-                        webbed = true;
-                    }
-                }
+//                     if(angle > 45)
+//                     {
+//                         dir_right = Vector3.Cross(terrainNormal, Vector3.up);
+//                         dir = Vector3.Cross(terrainNormal, dir_right);
+//                     }
 
-                first_col = false;
-            }
-            else
-                return;
+//                     if(tEdit.CheckIce(terX, terZ))
+//                     {
+//                         onIce = true;
+//                     }
+
+//                     if(tEdit.CheckWebbed(terX, terZ))
+//                     {
+//                         webbed = true;
+//                     }
+//                 }
+
+//                 first_col = false;
+//             }
+//             else
+//                 return;
             
-        }
-        else
-        {
-            dir = Vector3.zero;
-            onIce = false;
-            webbed = false;
-        }
-    }
+//         }
+//         else
+//         {
+//             dir = Vector3.zero;
+//             onIce = false;
+//             webbed = false;
+//         }
+//     }
     
 }
 

@@ -72,3 +72,6 @@ crashlytics-build.properties
 
 # VS Code
 .vscode/
+
+# Terrian Stuff
+Assets/Resources/TerrainBackups/*
