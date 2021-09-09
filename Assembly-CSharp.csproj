@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Gadgets\FreezeRay\FR_PickUp.cs" />
+     <Compile Include="Assets\Scripts\Gadgets\InteractableGadget.cs" />
      <Compile Include="Assets\Scripts\UI\TitleButton.cs" />
      <Compile Include="Assets\Scripts\Gadgets\WebCannon\WebBallMotion.cs" />
      <Compile Include="Assets\Scripts\Puzzle\Drown.cs" />
@@ -50,16 +51,18 @@
      <Compile Include="Assets\Scripts\Misc\FPSCounter.cs" />
      <Compile Include="Assets\Scripts\Gadgets\WebCannon\WC_PickUp.cs" />
      <Compile Include="Assets\Scripts\Terrain\RestoreTerrain.cs" />
+     <Compile Include="Assets\Scripts\Gadgets\VRSlot.cs" />
      <Compile Include="Assets\Scripts\Puzzle\Drone.cs" />
      <Compile Include="Assets\Scripts\Player\GadgetManager.cs" />
      <Compile Include="Assets\Scripts\Player\HandMovement.cs" />
      <Compile Include="Assets\Scripts\UI\QuitButton.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
-     <Compile Include="Assets\Scripts\Misc\PauseManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\PauseManager.cs" />
      <Compile Include="Assets\Scripts\Misc\GameEnd.cs" />
      <Compile Include="Assets\Scripts\UI\ResumeButton.cs" />
      <Compile Include="Assets\Scripts\UI\StartButton.cs" />
-     <Compile Include="Assets\Scripts\Misc\ReadPaper.cs" />
+     <Compile Include="Assets\Scripts\Managers\EventManager.cs" />
+     <Compile Include="Assets\Scripts\Misc\Paper.cs" />
      <Compile Include="Assets\Scripts\Respawn\RespawnModifier.cs" />
      <Compile Include="Assets\Scripts\UI\ControlsToMenu.cs" />
      <Compile Include="Assets\Scripts\Gadgets\WebCannon\ShootWeb.cs" />
@@ -67,9 +70,10 @@
      <Compile Include="Assets\Scripts\Misc\PickUp.cs" />
      <Compile Include="Assets\Scripts\Gadgets\SpringBoots\SB_PickUp.cs" />
      <Compile Include="Assets\Scripts\Terrain\TerrainEditor.cs" />
+     <Compile Include="Assets\Scripts\Player\ReadPaper.cs" />
      <Compile Include="Assets\Scripts\Gadgets\FreezeRay\ShootIce.cs" />
-     <Compile Include="Assets\Scripts\Gadgets\VRSlot.cs" />
-     <Compile Include="Assets\Scripts\Gadgets\InteractableGadget.cs" />
+     <Compile Include="Assets\Scripts\Managers\Singleton.cs" />
+     <Compile Include="Assets\Scripts\VR\DebounceButton.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
      <None Include="Assets\Lava_Flowing_Shader\Shaders\Diffuse_Lava_Distort.shader" />
      <None Include="Assets\Coconut Palm Tree Pack\readme.txt" />

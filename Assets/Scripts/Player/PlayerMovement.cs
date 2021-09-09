@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _gravity = -9.81f;
 
+    [SerializeField]
+    private float _extraHeight = 0.2f;
+
     private float _fallingSpeed = 0f;
 
     private float _moveSpeed;
@@ -78,6 +81,8 @@ public class PlayerMovement : MonoBehaviour
 
     Terrain terrain;
 
+    private InputDevice device;
+
     void Start()
     {
         _cc = GetComponent<CharacterController>();
@@ -86,6 +91,8 @@ public class PlayerMovement : MonoBehaviour
         tEdit = GetComponent<TerrainEditor> ();
 
         _moveSpeed = _walkSpeed;
+
+        device = InputDevices.GetDeviceAtXRNode(_leftInput);
     }
 
     // Update is called once per frame
@@ -94,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         if(!PauseManager.paused && !PauseManager.reading)
         {
 
-            InputDevice device = InputDevices.GetDeviceAtXRNode(_leftInput);
+            
             device.TryGetFeatureValue(CommonUsages.primary2DAxis, out _direction);
 
             
@@ -224,37 +231,42 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-         if(!IsGrounded())
+
+        if(!PauseManager.reading)
         {
-            _fallingSpeed += _gravity * Time.fixedDeltaTime;
+            CapsuleFollowHeadset();
 
-            _cc.Move(Vector3.up * _fallingSpeed * Time.fixedDeltaTime);
+            if(!IsGrounded())
+            {
+                _fallingSpeed += _gravity * Time.fixedDeltaTime;
+
+                _cc.Move(Vector3.up * _fallingSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                CheckTerrain();
+                _fallingSpeed = 0f;
+            }
+
+            if(onIce)
+            {
+                _moveSpeed += _iceAcceleration * Time.fixedDeltaTime;
+            }
+            else if(_moveSpeed > _walkSpeed)
+            {
+                _moveSpeed -= _iceAcceleration * Time.fixedDeltaTime;
+            }
+
+            _moveSpeed = Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
+
+            Quaternion headYaw = Quaternion.Euler(0, _rig.cameraGameObject.transform.eulerAngles.y, 0);
+
+            Vector3 v3Dir = headYaw * new Vector3(_direction.x, 0, _direction.y);
+
+            // apply the velocity to the player
+            _cc.Move(v3Dir * Time.fixedDeltaTime * _moveSpeed);
+
         }
-        else
-        {
-            CheckTerrain();
-            _fallingSpeed = 0f;
-        }
-
-        if(onIce)
-        {
-            _moveSpeed += _iceAcceleration * Time.fixedDeltaTime;
-        }
-        else if(_moveSpeed > _walkSpeed)
-        {
-            _moveSpeed -= _iceAcceleration * Time.fixedDeltaTime;
-        }
-
-        _moveSpeed = Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
-
-        Quaternion headYaw = Quaternion.Euler(0, _rig.cameraGameObject.transform.eulerAngles.y, 0);
-
-        Vector3 v3Dir = headYaw * new Vector3(_direction.x, 0, _direction.y);
-
-        // apply the velocity to the player
-        _cc.Move(v3Dir * Time.fixedDeltaTime * _moveSpeed);
-
-       
     }
 
     private bool IsGrounded()
@@ -310,6 +322,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void CapsuleFollowHeadset()
+    {
+        _cc.height = _rig.cameraInRigSpaceHeight + _extraHeight;
+
+        Vector3 center = transform.InverseTransformPoint(_rig.cameraGameObject.transform.position);
+
+        _cc.center = new Vector3(center.x, _cc.height/2 + _cc.skinWidth, center.z);
+    }
+
     // compress the spring boots to get a larger jump
     IEnumerator ChargeJump()
     {
@@ -326,71 +347,13 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y = Mathf.Sqrt( (jumpHeight + jumpMod) * -2f * gravity);
         jumpMod = 0f;
-        // apply the velocity to the player
+    
         // apply the velocity to the player
         _cc.Move(velocity * Time.deltaTime);
         charging = false;
         webbed = false;
     }
 
-    
-
-//     void OnControllerColliderHit(ControllerColliderHit hit)
-//     {
-
-//         Debug.Log(onIce);
-//         if(hit.collider.tag == "Ground")
-//         {
-//             if(first_col)
-//             {
-//                 terrain = tEdit.GetTerrainAtObject(hit.collider.gameObject);
-
-//                 dir = Vector3.zero;
-//                 onIce = false;
-//                 webbed = false;
-
-//                 if(terrain != null)
-//                 {
-//                     tEdit.SetEditValues(terrain);
-
-//                     // get heightmap coords
-//                     tEdit.GetCoords(hit.point, out int terX, out int terZ);
-
-//                     terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (hit.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (hit.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
-
-//                     float angle = Vector3.Angle(terrainNormal, Vector3.up);
-
-//                     if(angle > 45)
-//                     {
-//                         dir_right = Vector3.Cross(terrainNormal, Vector3.up);
-//                         dir = Vector3.Cross(terrainNormal, dir_right);
-//                     }
-
-//                     if(tEdit.CheckIce(terX, terZ))
-//                     {
-//                         onIce = true;
-//                     }
-
-//                     if(tEdit.CheckWebbed(terX, terZ))
-//                     {
-//                         webbed = true;
-//                     }
-//                 }
-
-//                 first_col = false;
-//             }
-//             else
-//                 return;
-            
-//         }
-//         else
-//         {
-//             dir = Vector3.zero;
-//             onIce = false;
-//             webbed = false;
-//         }
-//     }
-    
 }
 
 

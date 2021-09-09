@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseManager : MonoBehaviour
+public class PauseManager : Singleton<PauseManager>
 {
     public static bool reading = false;
     public static bool paused = false;
@@ -10,6 +10,34 @@ public class PauseManager : MonoBehaviour
     public RectTransform menu;
 
     public RectTransform controls;
+
+    private EventManager _eventManager;
+
+    void Start()
+    {
+        _eventManager = EventManager.Instance;
+
+        _eventManager.OnRead += SetRead;
+    }
+
+    void Pause()
+    {
+        Time.timeScale = 0;
+
+        paused = true;
+    }
+
+    void UnPause()
+    {
+        Time.timeScale = 1;
+
+        paused = false;
+    }
+
+    void SetRead(bool read)
+    {
+        reading = read;
+    }
 
 
     void Update()

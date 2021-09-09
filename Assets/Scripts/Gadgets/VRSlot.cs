@@ -16,8 +16,6 @@ public class VRSlot : MonoBehaviour
 
             _gadget.transform.SetParent(transform);
 
-            //Debug.Log("wut");
-
             _gadget.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
             _gadget.GetComponent<InteractableGadget>().slotRef = this;
@@ -26,9 +24,6 @@ public class VRSlot : MonoBehaviour
 
     public void ReleaseGadget()
     {
-        // _gadget.transform.SetParent(null);
-
-        // _gadget.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
         _gadget = null;
 
