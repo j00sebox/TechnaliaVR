@@ -245,7 +245,7 @@ public class PlayerMovement : MonoBehaviour
             _moveSpeed -= _iceAcceleration * Time.fixedDeltaTime;
         }
 
-        Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
+        _moveSpeed = Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
 
         Quaternion headYaw = Quaternion.Euler(0, _rig.cameraGameObject.transform.eulerAngles.y, 0);
 

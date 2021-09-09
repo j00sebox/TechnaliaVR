@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShootIce : MonoBehaviour
 {
+
     RaycastHit hit;
 
     int layerMask;
@@ -28,6 +29,7 @@ public class ShootIce : MonoBehaviour
         editor = GetComponent<TerrainEditor> ();
         iceAudio = GetComponent<AudioSource>();
     }
+    
 
     public void Shoot()
     {
@@ -89,10 +91,5 @@ public class ShootIce : MonoBehaviour
 
             yield return null;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

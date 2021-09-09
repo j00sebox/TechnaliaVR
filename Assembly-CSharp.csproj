@@ -68,6 +68,8 @@
      <Compile Include="Assets\Scripts\Gadgets\SpringBoots\SB_PickUp.cs" />
      <Compile Include="Assets\Scripts\Terrain\TerrainEditor.cs" />
      <Compile Include="Assets\Scripts\Gadgets\FreezeRay\ShootIce.cs" />
+     <Compile Include="Assets\Scripts\Gadgets\VRSlot.cs" />
+     <Compile Include="Assets\Scripts\Gadgets\InteractableGadget.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
      <None Include="Assets\Lava_Flowing_Shader\Shaders\Diffuse_Lava_Distort.shader" />
      <None Include="Assets\Coconut Palm Tree Pack\readme.txt" />
