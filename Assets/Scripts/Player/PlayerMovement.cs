@@ -19,9 +19,6 @@ public class PlayerMovement : MonoBehaviour
     private float _maxSpeed = 20f;
 
     [SerializeField]
-    private float _maxYVel = 50f;
-
-    [SerializeField]
     private float _iceAcceleration = 5.5f;
 
     [SerializeField]
@@ -49,8 +46,6 @@ public class PlayerMovement : MonoBehaviour
 
     private float _moveSpeed;
 
-    private bool _isJumping = false;
-
     private bool _charging = false;
 
     private CharacterController _cc;
@@ -61,7 +56,9 @@ public class PlayerMovement : MonoBehaviour
 
     private XRRig _rig;
 
-    private DebounceButton _debounceA;
+    private bool _aButtonState = false;
+
+    private bool _prevState = false;
 
     AudioSource[] footstepSound;
 
@@ -96,8 +93,6 @@ public class PlayerMovement : MonoBehaviour
         _leftController = InputDevices.GetDeviceAtXRNode(_leftInput);
 
         _rightController = InputDevices.GetDeviceAtXRNode(_rightInput);
-
-        _debounceA = new DebounceButton(_rightInput, CommonUsages.primaryButton, null, () => Jump());
     }
 
     // Update is called once per frame
@@ -107,9 +102,14 @@ public class PlayerMovement : MonoBehaviour
         {
             _leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out _direction);
 
-            //_rightController.TryGetFeatureValue(CommonUsages.primaryButton, out _isJumping);
+            _rightController.TryGetFeatureValue(CommonUsages.primaryButton, out _aButtonState);
 
-            _debounceA.PollButton();
+            if(_aButtonState != _prevState)
+            {
+                Jump();
+            }
+
+            _prevState = _aButtonState;
             
         }
     }
@@ -122,14 +122,6 @@ public class PlayerMovement : MonoBehaviour
 
             // makes sure the capsule collider moves with the headset
             CapsuleFollowHeadset();
-
-            /**********JUMP**********/
-
-            if(_isJumping)
-            {
-                if(_cc.velocity.y >= _maxYVel)
-                    _isJumping = false;
-            }
 
             
             /**********GRAVITY**********/
@@ -154,17 +146,23 @@ public class PlayerMovement : MonoBehaviour
 
             /**********ICE**********/
 
-            if(_onIce)
+            if(IsMoving())
             {
-                _moveSpeed += _iceAcceleration * Time.fixedDeltaTime;
-            }
-            else if(_moveSpeed > _walkSpeed)
-            {
-                _moveSpeed -= _iceAcceleration * Time.fixedDeltaTime;
-            }
+                if(_onIce)
+                {
+                    _moveSpeed += _iceAcceleration * Time.fixedDeltaTime;
+                }
+                else if(_moveSpeed > _walkSpeed)
+                {
+                    _moveSpeed -= _iceAcceleration * 2f * Time.fixedDeltaTime;
+                }
 
-            _moveSpeed = Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
-           
+                _moveSpeed = Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
+            }
+            else
+            {
+                _moveSpeed = _walkSpeed;
+            }
 
             /**********MOVE**********/
 
@@ -176,6 +174,11 @@ public class PlayerMovement : MonoBehaviour
             _cc.Move(v3Dir * _moveSpeed * Time.fixedDeltaTime);
 
         }
+    }
+
+    private bool IsMoving()
+    {
+        return _direction.x != 0 || _direction.y != 0;
     }
 
     private void Jump()
@@ -272,8 +275,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _fallingSpeed = Mathf.Sqrt( (_jumpVel + jumpMod) * -2f * _gravity );
-
-        _isJumping = true;
         
         webbed = false;
     }

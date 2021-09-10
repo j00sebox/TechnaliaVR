@@ -21,11 +21,9 @@ public class DebounceButton
 
     private Action _buttonPressCallback;
 
-    private Action _valueChangeCallback;
-
     private DebounceButton() {}
 
-    public DebounceButton(XRNode nodeToPoll, InputFeatureUsage<bool> feat, Action onPressCallback = null, Action onValueChangeCallback = null, float dBounceT = 0.2f)
+    public DebounceButton(XRNode nodeToPoll, InputFeatureUsage<bool> feat, Action onPressCallback, float dBounceT = 0.2f)
     {
         _device = InputDevices.GetDeviceAtXRNode(nodeToPoll);
 
@@ -36,8 +34,6 @@ public class DebounceButton
         _prevState = _state;
 
         _buttonPressCallback = onPressCallback;
-
-        _valueChangeCallback = onValueChangeCallback;
 
         _debounceTime = dBounceT;
     }
@@ -58,9 +54,6 @@ public class DebounceButton
 
         _device.TryGetFeatureValue(_button, out _state);
 
-        if(_state != _prevState)
-                _valueChangeCallback?.Invoke();
-
         if(!_debounce) { 
 
             if(_state)
@@ -68,8 +61,6 @@ public class DebounceButton
 
            _debounce = true; 
         }
-
-        _prevState = _state;
 
     }
 }

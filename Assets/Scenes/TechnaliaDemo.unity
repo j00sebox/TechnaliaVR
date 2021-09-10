@@ -23251,13 +23251,13 @@ MonoBehaviour:
   _leftInput: 4
   _rightInput: 5
   _walkSpeed: 7
-  _maxSpeed: 20
-  _maxYVel: 30
-  _iceAcceleration: 5.5
+  _maxSpeed: 25
+  _maxYVel: 20
+  _iceAcceleration: 1.5
   _gravity: -9.81
   _extraHeight: 0.2
-  _jumpVel: 5
-  _slidingFactor: 0.5
+  _jumpVel: 3
+  _slidingFactor: 0.25
   _layerMask:
     serializedVersion: 2
     m_Bits: 257
