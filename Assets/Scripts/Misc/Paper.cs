@@ -9,8 +9,6 @@ public class Paper : MonoBehaviour
 
     public GameObject entry;
 
-    bool inrange = false;
-
     private EventManager _eventManager;
 
     void Start()

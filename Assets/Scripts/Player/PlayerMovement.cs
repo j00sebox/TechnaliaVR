@@ -8,12 +8,18 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private XRNode _leftInput;
+
+    [SerializeField]
+    private XRNode _rightInput;
     
     [SerializeField]
     private float _walkSpeed = 5f;
 
     [SerializeField]
     private float _maxSpeed = 20f;
+
+    [SerializeField]
+    private float _maxYVel = 50f;
 
     [SerializeField]
     private float _iceAcceleration = 5.5f;
@@ -24,9 +30,28 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _extraHeight = 0.2f;
 
+    [SerializeField]
+    private float _jumpVel = 7f;
+
+    [SerializeField]
+    private float _slidingFactor = 0.5f;
+
+    [SerializeField]
+    private LayerMask _layerMask;
+
+    private bool _canJump;
+
+    private float _timeElapsed;
+
+    private float _yVel;
+
     private float _fallingSpeed = 0f;
 
     private float _moveSpeed;
+
+    private bool _isJumping = false;
+
+    private bool _charging = false;
 
     private CharacterController _cc;
 
@@ -36,63 +61,43 @@ public class PlayerMovement : MonoBehaviour
 
     private XRRig _rig;
 
+    private DebounceButton _debounceA;
+
     AudioSource[] footstepSound;
 
     int sandSound = 1;
 
     int iceSound = 0;
 
-    public float walkSpeed = 9f;
-    public float sprintSpeed = 14f;
-    public static float gravity = -9.81f;
-    public float jumpHeight = 7f;
-
-    float jumpMod;
-
-    bool charging = false;
-
-    // this makes sure only one Move call updates the collision with the terrains
-    bool first_col = false;
-
     public bool springBoots = false;
 
-    float speed;
+    private bool _onIce = false;
 
-    public static Vector3 velocity;
-
-    Vector3 interpolatedPos;
-
-    Vector3 terrainNormal;
-
-    Vector3 slope;
-
-    Vector3 dir;
-
-    Vector3 dir_right;
-
-    bool onIce = false;
     public bool webbed = false;
 
-    RaycastHit toFloor;
+    private TerrainEditor _tEdit;
 
-    int layerMask;
+    private Terrain _terrain;
 
-    TerrainEditor tEdit;
+    private InputDevice _leftController;
 
-    Terrain terrain;
-
-    private InputDevice device;
+    private InputDevice _rightController;
 
     void Start()
     {
         _cc = GetComponent<CharacterController>();
+
         _rig = GetComponent<XRRig>();
-        layerMask = LayerMask.GetMask("Ground");
-        tEdit = GetComponent<TerrainEditor> ();
+
+        _tEdit = GetComponent<TerrainEditor> ();
 
         _moveSpeed = _walkSpeed;
 
-        device = InputDevices.GetDeviceAtXRNode(_leftInput);
+        _leftController = InputDevices.GetDeviceAtXRNode(_leftInput);
+
+        _rightController = InputDevices.GetDeviceAtXRNode(_rightInput);
+
+        _debounceA = new DebounceButton(_rightInput, CommonUsages.primaryButton, null, () => Jump());
     }
 
     // Update is called once per frame
@@ -100,131 +105,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!PauseManager.paused && !PauseManager.reading)
         {
+            _leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out _direction);
 
-            
-            device.TryGetFeatureValue(CommonUsages.primary2DAxis, out _direction);
+            //_rightController.TryGetFeatureValue(CommonUsages.primaryButton, out _isJumping);
 
-            
-
-            // if the player is moving on the ground there should be footstep sounds
-            // if( (z != 0 || x != 0) && _cc.isGrounded)
-            // {
-            //     // play different sound effects if the player is currently moving on sand vs ice
-            //     //if(onIce)
-            //     // {
-            //     //     if(!footstepSound[iceSound].isPlaying)
-            //     //     {
-            //     //         footstepSound[sandSound].Stop();
-            //     //         footstepSound[iceSound].Play();
-            //     //     }
-            //     // }
-            //     // else
-            //     // {   
-            //     //     if(!footstepSound[sandSound].isPlaying)
-            //     //     {
-            //     //         footstepSound[iceSound].Stop();
-            //     //         footstepSound[sandSound].Play();
-            //     //     }
-            //     // }
-
-            //     // sprint button changes player's speed
-            //     // if(Input.GetKey(KeyCode.LeftShift))
-            //     // {
-            //     //     anim.SetBool("IsWalking", false);
-            //     //     anim.SetBool("IsRunning", true);
-            //     //     speed = sprintSpeed;
-            //     // }
-            //     // else
-            //     // {
-            //     //     anim.SetBool("IsRunning", false);
-            //     //     anim.SetBool("IsWalking", true);
-            //     //     speed = walkSpeed;
-            //     // }
-            // }
-            // else
-            // {
-            //     anim.SetBool("IsWalking", false);
-
-            //     if(footstepSound[iceSound].isPlaying)
-            //     {
-            //         footstepSound[iceSound].Stop();
-            //     }
-
-            //     if(footstepSound[sandSound].isPlaying)
-            //     {
-            //         footstepSound[sandSound].Stop();
-            //     }
-            // }
-
-            // if(springBoots)
-            // {
-            //     if (Input.GetButton("Jump") && !charging)
-            //         StartCoroutine(ChargeJump());   
-            // }           
-            // else
-            // {
-            //     // play jump animation and calculate upwards velocity
-            //     if(Input.GetButtonDown("Jump"))
-            //     {
-            //         velocity.y = Mathf.Sqrt( (jumpHeight) * -2f * gravity);
-            //     }
-            // }
-
-            /**********************MOVEMENT**********************/
-
-            // move forwards/backwards with z and left/right with x
-            //Vector3 move = transform.right * x + transform.forward * z;
-            
-            // character controller handles the movement
-            // if(!webbed)
-            // {
-            //     first_col = true;
-            //     _cc.Move(move * speed * Time.deltaTime);
-            //     _cc.Move(dir * speed * Time.deltaTime);
-            // }
-
-            // // gradually brings play back to ground
-            // velocity.y += gravity * Time.deltaTime;
-
-            // if(webbed)
-            // {
-            //     velocity = new Vector3(0,0,0);
-            // }
-
-            // // if player is on ice then they gradually gain speed
-            // if(onIce)
-            // {
-            //     if(x != 0)
-            //     {
-            //         velocity += transform.right*0.5f*x;
-            //     }
-            //     else
-            //     {
-            //         velocity.x *= 99f/100f;
-            //     }
-
-            //     if(z != 0)
-            //     {
-            //         velocity += transform.forward*0.5f*z;
-            //     }
-            //     else
-            //     {
-            //         velocity.z *= 99f/100f;
-            //     }
-            // }
-            // else if(!_cc.isGrounded)
-            // {
-            //     velocity.x *= 0.97f;
-            //     velocity.z *= 0.97f;
-            // }
-            // else
-            // {
-            //     // this will gradually slow down the player
-            //     velocity.x = 0f;
-            //     velocity.z = 0f;
-            // }
-
-            
+            _debounceA.PollButton();
             
         }
     }
@@ -234,21 +119,42 @@ public class PlayerMovement : MonoBehaviour
 
         if(!PauseManager.reading)
         {
+
+            // makes sure the capsule collider moves with the headset
             CapsuleFollowHeadset();
 
-            if(!IsGrounded())
-            {
-                _fallingSpeed += _gravity * Time.fixedDeltaTime;
+            /**********JUMP**********/
 
-                _cc.Move(Vector3.up * _fallingSpeed * Time.fixedDeltaTime);
+            if(_isJumping)
+            {
+                if(_cc.velocity.y >= _maxYVel)
+                    _isJumping = false;
             }
-            else
+
+            
+            /**********GRAVITY**********/
+
+            if(IsGrounded())
             {
                 CheckTerrain();
-                _fallingSpeed = 0f;
+
+                _canJump = true;
+            }
+            else
+            {  
+                _canJump = false;
+
+                if(_cc.velocity.y < 0)
+                    _fallingSpeed = 0;
+                else
+                    _fallingSpeed += _gravity * Time.fixedDeltaTime;
             }
 
-            if(onIce)
+            _cc.Move(Vector3.up * _fallingSpeed * Time.fixedDeltaTime);
+
+            /**********ICE**********/
+
+            if(_onIce)
             {
                 _moveSpeed += _iceAcceleration * Time.fixedDeltaTime;
             }
@@ -258,67 +164,86 @@ public class PlayerMovement : MonoBehaviour
             }
 
             _moveSpeed = Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
+           
+
+            /**********MOVE**********/
 
             Quaternion headYaw = Quaternion.Euler(0, _rig.cameraGameObject.transform.eulerAngles.y, 0);
 
             Vector3 v3Dir = headYaw * new Vector3(_direction.x, 0, _direction.y);
 
             // apply the velocity to the player
-            _cc.Move(v3Dir * Time.fixedDeltaTime * _moveSpeed);
+            _cc.Move(v3Dir * _moveSpeed * Time.fixedDeltaTime);
 
         }
+    }
+
+    private void Jump()
+    {
+        if(!_charging && _canJump)
+        {
+            _charging = true;
+
+            if(springBoots)
+                StartCoroutine(ChargeJump());
+            else
+                _fallingSpeed = Mathf.Sqrt( _jumpVel * -2f * _gravity );
+        }
+        else
+        {
+            _charging = false;
+        }
+        
     }
 
     private bool IsGrounded()
     {
         Vector3 origin = transform.TransformPoint(_cc.center);
 
-        return Physics.SphereCast(origin, _cc.radius, Vector3.down, out _terrainHitInfo, _cc.center.y + 0.01f, layerMask);
+        return Physics.SphereCast(origin, _cc.radius, Vector3.down, out _terrainHitInfo, _cc.center.y + 0.01f, _layerMask);
     }
 
     private void CheckTerrain()
     {
         if(_terrainHitInfo.collider.tag == "Ground")
         {
-            terrain = tEdit.GetTerrainAtObject(_terrainHitInfo.collider.gameObject);
+            _terrain = _tEdit.GetTerrainAtObject(_terrainHitInfo.collider.gameObject);
 
-            dir = Vector3.zero;
-            onIce = false;
+            Vector3 slideDir = Vector3.zero;
+            Vector3 dirRight;
+            Vector3 terrainNormal;
+
+            _onIce = false;
             webbed = false;
 
-            if(terrain != null)
+            if(_terrain != null)
             {
-                tEdit.SetEditValues(terrain);
+                _tEdit.SetEditValues(_terrain);
 
                 // get heightmap coords
-                tEdit.GetCoords(_terrainHitInfo.point, out int terX, out int terZ);
+                _tEdit.GetCoords(_terrainHitInfo.point, out int terX, out int terZ);
 
-                terrainNormal = terrain.terrainData.GetInterpolatedNormal(  (_terrainHitInfo.point.x - terrain.GetPosition().x) / terrain.terrainData.size.x,  (_terrainHitInfo.point.z - terrain.GetPosition().z) / terrain.terrainData.size.z);
+                terrainNormal = _terrain.terrainData.GetInterpolatedNormal(  (_terrainHitInfo.point.x - _terrain.GetPosition().x) / _terrain.terrainData.size.x,  (_terrainHitInfo.point.z - _terrain.GetPosition().z) / _terrain.terrainData.size.z);
 
                 float angle = Vector3.Angle(terrainNormal, Vector3.up);
 
                 if(angle > 45)
                 {
-                    dir_right = Vector3.Cross(terrainNormal, Vector3.up);
-                    dir = Vector3.Cross(terrainNormal, dir_right);
+                    dirRight = Vector3.Cross(terrainNormal, Vector3.up);
+                    slideDir = Vector3.Cross(terrainNormal, dirRight);
                 }
 
-                if(tEdit.CheckIce(terX, terZ))
-                {
-                    onIce = true;
-                }
+                _cc.Move(slideDir * angle * _slidingFactor * Time.fixedDeltaTime);
 
-                if(tEdit.CheckWebbed(terX, terZ))
-                {
-                    webbed = true;
-                }
+                _onIce = _tEdit.CheckIce(terX, terZ);
+
+                webbed = _tEdit.CheckWebbed(terX, terZ);
+                
             }
-
-            first_col = false;
         }
         else
         {
-            onIce = false;
+            _onIce = false;
         }
     }
 
@@ -334,23 +259,22 @@ public class PlayerMovement : MonoBehaviour
     // compress the spring boots to get a larger jump
     IEnumerator ChargeJump()
     {
-        charging = true;
+        float jumpMod = 0f;
+
         // while the player is still holding down the jump button increase the height they will jump
-        while(Input.GetButton("Jump"))
+        while(_charging)
         {
-            if(jumpMod<45) {
-                jumpMod += 24*Time.deltaTime;
+            if(jumpMod < 45f) {
+                jumpMod += 24f*Time.deltaTime;
             }
             
             yield return null;
         }
 
-        velocity.y = Mathf.Sqrt( (jumpHeight + jumpMod) * -2f * gravity);
-        jumpMod = 0f;
-    
-        // apply the velocity to the player
-        _cc.Move(velocity * Time.deltaTime);
-        charging = false;
+        _fallingSpeed = Mathf.Sqrt( (_jumpVel + jumpMod) * -2f * _gravity );
+
+        _isJumping = true;
+        
         webbed = false;
     }
 

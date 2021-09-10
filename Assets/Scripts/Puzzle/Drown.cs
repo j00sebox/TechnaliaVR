@@ -37,7 +37,7 @@ public class Drown : MonoBehaviour
 
     public IEnumerator StartCountdown(float countdownValue = 2)
     {
-        anim.SetTrigger("FadeOut");
+        //anim.SetTrigger("FadeOut");
         currCountdownValue = countdownValue;
         while (currCountdownValue > 0)
         {
