@@ -4,28 +4,35 @@ using UnityEngine;
 
 public class VRSlot : MonoBehaviour
 {
-    private GameObject _gadget;
+
+    public GameObject Gadget { get; set; }
+
+    public void AttachToSlot(GameObject gadget)
+    {
+        Gadget = gadget;
+
+        Gadget.transform.position = gameObject.transform.position;
+
+        Gadget.transform.SetParent(transform);
+
+        Gadget.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+        Gadget.GetComponent<InteractableGadget>().slotRef = this;
+    }
 
     void OnTriggerEnter(Collider coll)
     {
 
-        if(_gadget == null && coll.tag == "Gadget" && !coll.gameObject.GetComponent<InteractableGadget>().held)
+        if(Gadget == null && coll.tag == "Gadget" && !coll.gameObject.GetComponent<InteractableGadget>().held)
         {
-
-            _gadget = coll.gameObject;
-
-            _gadget.transform.SetParent(transform);
-
-            _gadget.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
-            _gadget.GetComponent<InteractableGadget>().slotRef = this;
+            AttachToSlot(coll.gameObject);
         }
     }
 
     public void ReleaseGadget()
     {
 
-        _gadget = null;
+        Gadget = null;
 
     }
 }

@@ -11,15 +11,22 @@ public class InteractableGadget : MonoBehaviour
 
     public bool held = false;
 
-    public bool inSlot = false;
-
     private bool _dropped = false;
+
+    private bool _aquired = false;
+
+    private EventManager _eventManager;
 
     public VRSlot slotRef;
 
+    void Start()
+    {
+        _eventManager = EventManager.Instance;
+    }
+
     void Update()
     {
-        if(!held && !inSlot && !_dropped)
+        if( _aquired && ( !held && slotRef == null && !_dropped ) )
         {
             _dropped = true;
 
@@ -29,7 +36,7 @@ public class InteractableGadget : MonoBehaviour
 
     IEnumerator Timer()
     {
-        while(_elapsedTime < _replaceTime || _dropped)
+        while(_elapsedTime < _replaceTime && _dropped)
         {
             _elapsedTime += Time.deltaTime;
 
@@ -38,10 +45,17 @@ public class InteractableGadget : MonoBehaviour
 
         _elapsedTime = 0f;
 
+        _eventManager.GadgetReturn(this);
+
         _dropped = false;
     }
 
     public void OnGrab() {
+
+        if(!_aquired)
+        {
+            _aquired = true;
+        }
          
         held = true; 
 
@@ -53,8 +67,6 @@ public class InteractableGadget : MonoBehaviour
             slotRef.ReleaseGadget();
 
             slotRef = null;
-
-            inSlot = false;
         }
     }
 
