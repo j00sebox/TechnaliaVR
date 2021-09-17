@@ -1,11 +1,13 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class ReadPaper : MonoBehaviour
+public class PickUp : MonoBehaviour
 {
+
     [SerializeField]
     private XRNode _leftInput;
 
@@ -13,15 +15,12 @@ public class ReadPaper : MonoBehaviour
 
     private EventManager _eventManager;
 
-    private bool _readState = false;
-
     void Start()
     {
         _eventManager = EventManager.Instance;
 
-        _db = new DebounceButton(_leftInput, CommonUsages.primaryButton, () => {
-            _readState = !_readState;
-            _eventManager.ReadPaper(_readState);
+        _db = new DebounceButton(_leftInput, CommonUsages.secondaryButton, () => {
+            _eventManager.PickupItem(gameObject);
         });
     }
 
@@ -29,5 +28,5 @@ public class ReadPaper : MonoBehaviour
     {
         _db.PollButton();
     }
-
+    
 }

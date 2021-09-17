@@ -4,13 +4,45 @@ using UnityEngine;
 
 public class InteractableGadget : MonoBehaviour
 {
+    [SerializeField]
+    private float _replaceTime = 3f;
+
+    private float _elapsedTime = 0f;
+
     public bool held = false;
 
     public bool inSlot = false;
 
+    private bool _dropped = false;
+
     public VRSlot slotRef;
 
-    public void OnGrab() { 
+    void Update()
+    {
+        if(!held && !inSlot && !_dropped)
+        {
+            _dropped = true;
+
+            StartCoroutine("Timer");
+        }
+    }
+
+    IEnumerator Timer()
+    {
+        while(_elapsedTime < _replaceTime || _dropped)
+        {
+            _elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        _elapsedTime = 0f;
+
+        _dropped = false;
+    }
+
+    public void OnGrab() {
+         
         held = true; 
 
         if(slotRef)

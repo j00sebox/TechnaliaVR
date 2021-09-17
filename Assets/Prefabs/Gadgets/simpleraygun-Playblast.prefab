@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787937c877f9e7646bc287f94823853c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 257
   iceSheet: {fileID: 5125719640124070118, guid: 5e2cd26b14220b94e8203890062acaff,
     type: 3}
 --- !u!114 &4092907678711400142
@@ -169,9 +172,10 @@ GameObject:
   - component: {fileID: 8949360180473590526}
   - component: {fileID: 8949360180473590513}
   - component: {fileID: 8949360180473590524}
+  - component: {fileID: 216729175}
   m_Layer: 9
   m_Name: simpleraygun-Playblast
-  m_TagString: Untagged
+  m_TagString: Gadget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -290,10 +294,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 216729175}
+        m_TargetAssemblyTypeName: InteractableGadget, Assembly-CSharp
+        m_MethodName: OnGrab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 216729175}
+        m_TargetAssemblyTypeName: InteractableGadget, Assembly-CSharp
+        m_MethodName: OnRelease
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Activated:
     m_PersistentCalls:
       m_Calls:
@@ -311,7 +339,19 @@ MonoBehaviour:
         m_CallState: 2
   m_Deactivated:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8718331720185025764}
+        m_TargetAssemblyTypeName: ShootIce, Assembly-CSharp
+        m_MethodName: StopShooting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnFirstHoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -374,7 +414,7 @@ MonoBehaviour:
   m_ThrowVelocityScale: 1.5
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
-  m_RetainTransformParent: 1
+  m_RetainTransformParent: 0
   m_AttachPointCompatibilityMode: 0
 --- !u!65 &8949360180473590524
 BoxCollider:
@@ -389,6 +429,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.00522806, y: 0.0161707, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &216729175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8139106764077770440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18cb8b8f498360847a3dba2cf0493227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _replaceTime: 3
+  held: 0
+  inSlot: 0
+  slotRef: {fileID: 0}
 --- !u!1 &8949360181578892552
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,31 +5,31 @@ using UnityEngine;
 public class ShootIce : MonoBehaviour
 {
 
-    RaycastHit hit;
+    [SerializeField]
+    private LayerMask _layerMask;
 
-    int layerMask;
+    private RaycastHit _hit;
+
+    private TerrainEditor _editor;
+
+    private Terrain _tob;
+
+    private MovingPlatform _platform;
+
+    private FreezePanel _freezePanel;
 
     public Transform iceSheet;
 
-    TerrainEditor editor;
-
-    Terrain tob;
-
-    MovingPlatform platform;
-
-    FreezePanel freezePanel;
-
     AudioSource iceAudio;
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
-        layerMask = LayerMask.GetMask("Ground");
-        editor = GetComponent<TerrainEditor> ();
+        _editor = GetComponent<TerrainEditor> ();
         iceAudio = GetComponent<AudioSource>();
     }
-    
+
 
     public void Shoot()
     {
@@ -45,46 +45,46 @@ public class ShootIce : MonoBehaviour
     {
         while(true)
         {
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 15, layerMask))
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out _hit, 15, _layerMask))
             {
                 // if(!iceAudio.isPlaying)
                 // {
                 //     iceAudio.Play();
                 // }
 
-                if(hit.collider.tag == "MovingPlat")
+                if(_hit.collider.tag == "MovingPlat")
                 {
-                    platform = hit.transform.gameObject.GetComponent<MovingPlatform> ();
+                    _platform = _hit.transform.gameObject.GetComponent<MovingPlatform> ();
 
-                    if(!platform.iced)
+                    if(!_platform.iced)
                     {
-                        platform.Icy();
+                        _platform.Icy();
                     }
                 }
-                else if(hit.collider.tag == "SolarPanel")
+                else if(_hit.collider.tag == "SolarPanel")
                 {
-                    freezePanel = hit.transform.gameObject.GetComponent<FreezePanel> ();
+                    _freezePanel = _hit.transform.gameObject.GetComponent<FreezePanel> ();
 
-                    if(!freezePanel.frozen)
+                    if(!_freezePanel.frozen)
                     {
-                        freezePanel.PowerPlatforms();
+                        _freezePanel.PowerPlatforms();
                     }
                 }
                 else
                 {
                     // get reference to terrain object
-                    tob = editor.GetTerrainAtObject(hit.transform.gameObject);
+                    _tob = _editor.GetTerrainAtObject(_hit.transform.gameObject);
 
-                    if(tob != null)
+                    if(_tob != null)
                     {
-                        editor.SetEditValues(tob);
+                        _editor.SetEditValues(_tob);
 
                         // convert player world coordinates into terrain coordinates
-                        editor.GetCoords(hit, out int terX, out int terZ);
-        
+                        _editor.GetCoords(_hit, out int terX, out int terZ);
+
                         // produce ice at specified terrain coordinates
-                        editor.ModifyTerrain(terX, terZ, 2);
-        
+                        _editor.ModifyTerrain(terX, terZ, 2);
+
                     }
                 }
             }

@@ -54,7 +54,7 @@ public class DebounceButton
 
         _device.TryGetFeatureValue(_button, out _state);
 
-        if(!_debounce) { 
+        if(!_debounce && _prevState != _state) { 
 
             if(_state)
                 _buttonPressCallback?.Invoke();

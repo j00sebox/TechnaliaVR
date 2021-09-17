@@ -21,8 +21,6 @@ public class Paper : MonoBehaviour
     {
         if(col.tag == "Player")
         {
-            col.GetComponent<ReadPaper>().InRangeOfPaper(true);
-
             read.enabled = true;
 
             _eventManager.OnRead += Read;
@@ -33,8 +31,6 @@ public class Paper : MonoBehaviour
     {
         if(col.tag == "Player")
         {
-            col.GetComponent<ReadPaper>().InRangeOfPaper(false);
-
             read.enabled = false;
 
             _eventManager.OnRead -= Read;
