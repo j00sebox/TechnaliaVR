@@ -31,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
     private float _jumpVel = 7f;
 
     [SerializeField]
+    private float _maxJumpMod = 45f;
+
+    [SerializeField]
     private float _slidingFactor = 0.5f;
 
     [SerializeField]
@@ -80,8 +83,12 @@ public class PlayerMovement : MonoBehaviour
 
     private InputDevice _rightController;
 
+    private EventManager _eventManager;
+
     void Start()
     {
+        _eventManager = EventManager.Instance;
+
         _cc = GetComponent<CharacterController>();
 
         _rig = GetComponent<XRRig>();
@@ -250,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void CapsuleFollowHeadset()
+    private void CapsuleFollowHeadset()
     {
         _cc.height = _rig.cameraInRigSpaceHeight + _extraHeight;
 
@@ -260,25 +267,29 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // compress the spring boots to get a larger jump
-    IEnumerator ChargeJump()
+    private IEnumerator ChargeJump()
     {
         float jumpMod = 0f;
+
+        _eventManager.SetBarActive(true);
 
         // while the player is still holding down the jump button increase the height they will jump
         while(_charging)
         {
-            if(jumpMod < 45f) {
+            if(jumpMod < _maxJumpMod) {
                 jumpMod += 24f*Time.deltaTime;
+                _eventManager.UpdateJumpBar(jumpMod/_maxJumpMod);
             }
             
             yield return null;
         }
 
         _fallingSpeed = Mathf.Sqrt( (_jumpVel + jumpMod) * -2f * _gravity );
+
+        _eventManager.SetBarActive(false);
         
         webbed = false;
     }
-
 }
 
 
