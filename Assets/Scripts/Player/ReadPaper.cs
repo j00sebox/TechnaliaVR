@@ -13,21 +13,30 @@ public class ReadPaper : MonoBehaviour
 
     private EventManager _eventManager;
 
+    private PlayerMovement _pMovement;
+
     private bool _readState = false;
+
+    public bool inRange = false;
 
     void Start()
     {
         _eventManager = EventManager.Instance;
 
+        _pMovement  = GetComponent<PlayerMovement>();
+
         _db = new DebounceButton(_leftInput, CommonUsages.primaryButton, () => {
             _readState = !_readState;
-            _eventManager.ReadPaper(_readState);
+            _eventManager.ReadPaper(_readState, gameObject);
         });
     }
 
     void Update()
     {
-        _db.PollButton();
+        if(inRange && _pMovement.IsGrounded())
+        {
+            _db.PollButton();
+        }
     }
 
 }

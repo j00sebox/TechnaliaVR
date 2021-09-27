@@ -3,15 +3,15 @@ using System;
 
 public class EventManager : Singleton<EventManager>
 {
-    public Action<bool> OnRead;
+    public Action<bool, GameObject> OnRead;
 
     public Action<GameObject> OnItemPickup;
 
     public Action<InteractableGadget> OnGadgetReturn;
 
-    public void ReadPaper(bool b)
+    public void ReadPaper(bool b, GameObject playerRef)
     {
-        OnRead?.Invoke(b);
+        OnRead?.Invoke(b, playerRef);
     }
 
     public void PickupItem(GameObject go)

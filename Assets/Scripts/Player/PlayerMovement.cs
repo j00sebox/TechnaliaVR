@@ -199,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         Vector3 origin = transform.TransformPoint(_cc.center);
 

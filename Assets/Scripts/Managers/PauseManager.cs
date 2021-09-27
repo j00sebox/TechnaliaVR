@@ -34,11 +34,10 @@ public class PauseManager : Singleton<PauseManager>
         paused = false;
     }
 
-    void SetRead(bool read)
+    void SetRead(bool read, GameObject playerRef)
     {
-        reading = read;
+        reading = read;   
     }
-
 
     public static void UpdateCursorState()
     {

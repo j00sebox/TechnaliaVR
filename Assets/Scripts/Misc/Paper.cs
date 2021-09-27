@@ -11,6 +11,9 @@ public class Paper : MonoBehaviour
 
     private EventManager _eventManager;
 
+    [SerializeField]
+    private Canvas _canvas;
+
     void Start()
     {
         _eventManager = EventManager.Instance;
@@ -23,6 +26,8 @@ public class Paper : MonoBehaviour
         {
             read.enabled = true;
 
+            col.GetComponent<ReadPaper>().inRange = true;
+
             _eventManager.OnRead += Read;
         }
     }
@@ -33,15 +38,35 @@ public class Paper : MonoBehaviour
         {
             read.enabled = false;
 
+            col.GetComponent<ReadPaper>().inRange = false;
+
             _eventManager.OnRead -= Read;
         }
     }
 
-    void Read(bool b)
+    void Read(bool b, GameObject playerRef)
     {
         read.enabled = !b;
 
         entry.SetActive(b);
+
+        if(b)
+        {
+            AdjustAngle(playerRef);
+        }
+    }
+
+    // turns the diary entry towards teh player
+    private void AdjustAngle(GameObject playerRef)
+    {
+        float angle = Vector3.Angle(playerRef.transform.forward, _canvas.transform.forward);
+
+        _canvas.transform.LookAt(playerRef.transform);
+        
+        Vector3 rot = _canvas.transform.rotation.eulerAngles;
+        
+        // needed to flip text around
+        _canvas.transform.rotation = Quaternion.Euler(0, rot.y+180, 0);
     }
     
 }
