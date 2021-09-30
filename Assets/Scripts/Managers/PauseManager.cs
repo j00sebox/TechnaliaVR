@@ -5,8 +5,8 @@ using UnityEngine.XR;
 
 public class PauseManager : Singleton<PauseManager>
 {
-    public static bool reading = false;
-    public static bool paused = false;
+    public static bool reading;
+    public static bool paused;
 
     [SerializeField]
     private RectTransform _menusCanvas;
@@ -31,6 +31,12 @@ public class PauseManager : Singleton<PauseManager>
 
     void Start()
     {
+        reading = false;
+        paused = false;
+
+        // if reloading into scene make sure time scale is 1
+        Time.timeScale = 1;
+
         _eventManager = EventManager.Instance;
 
         _eventManager.OnRead += SetRead;

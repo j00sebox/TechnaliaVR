@@ -110,6 +110,8 @@ public class PlayerMovement : MonoBehaviour
 
             _rightController.TryGetFeatureValue(CommonUsages.primaryButton, out _aButtonState);
 
+            Debug.Log(_direction);
+
             if(_aButtonState != _prevState)
             {
                 Jump();
