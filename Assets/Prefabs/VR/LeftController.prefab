@@ -98,6 +98,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Left_Hand
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 29d23b3a7876eb6418181c809c6b827c,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 90e1840898fbec14695b20da73849756, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29d23b3a7876eb6418181c809c6b827c, type: 3}
 --- !u!4 &4897795741790267718 stripped

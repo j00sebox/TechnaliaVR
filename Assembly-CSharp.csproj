@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\Player\PauseGame.cs" />
      <Compile Include="Assets\Scripts\Managers\Singleton.cs" />
      <Compile Include="Assets\Scripts\VR\DebounceButton.cs" />
+     <Compile Include="Assets\Scripts\VR\Hand.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
      <None Include="Assets\Lava_Flowing_Shader\Shaders\Diffuse_Lava_Distort.shader" />
      <None Include="Assets\Coconut Palm Tree Pack\readme.txt" />

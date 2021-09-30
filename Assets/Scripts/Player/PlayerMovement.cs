@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
@@ -109,8 +110,6 @@ public class PlayerMovement : MonoBehaviour
             _leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out _direction);
 
             _rightController.TryGetFeatureValue(CommonUsages.primaryButton, out _aButtonState);
-
-            Debug.Log(_direction);
 
             if(_aButtonState != _prevState)
             {
