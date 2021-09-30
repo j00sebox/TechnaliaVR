@@ -5,6 +5,10 @@ public class EventManager : Singleton<EventManager>
 {
     public Action<bool, GameObject> OnRead;
 
+    public Action OnPause;
+
+    public Action OnUnPause;
+
     public Action<GameObject> OnItemPickup;
 
     public Action<InteractableGadget> OnGadgetReturn;
@@ -13,9 +17,21 @@ public class EventManager : Singleton<EventManager>
 
     public Action<float> OnUpdateJumpBar;
 
+    public Action<bool> OnShowControls;
+
     public void ReadPaper(bool b, GameObject playerRef)
     {
         OnRead?.Invoke(b, playerRef);
+    }
+
+    public void Pause()
+    {
+        OnPause?.Invoke();
+    }
+
+    public void UnPause()
+    {
+        OnUnPause?.Invoke();
     }
 
     public void PickupItem(GameObject go)
@@ -36,5 +52,10 @@ public class EventManager : Singleton<EventManager>
     public void UpdateJumpBar(float progress)
     {
         OnUpdateJumpBar?.Invoke(progress);
+    }
+
+    public void ShowControls(bool b)
+    {
+        OnShowControls?.Invoke(b);
     }
 }

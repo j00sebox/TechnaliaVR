@@ -42,7 +42,7 @@ public class DebounceButton
     {
         if(_debounce)
         {
-            _timeElapsed += Time.deltaTime;
+            _timeElapsed += Time.unscaledDeltaTime;
 
             if(_timeElapsed >= _debounceTime)
             {

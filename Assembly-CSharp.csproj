@@ -64,14 +64,15 @@
      <Compile Include="Assets\Scripts\Gadgets\WebCannon\ShootWeb.cs" />
      <Compile Include="Assets\Lava_Flowing_Shader\Scripts\ScrollingUVs_Layers.cs" />
      <Compile Include="Assets\Scripts\Player\PickUp.cs" />
+     <Compile Include="Assets\Scripts\UI\JumpBar.cs" />
      <Compile Include="Assets\Scripts\Items\ItemPickup.cs" />
      <Compile Include="Assets\Scripts\Gadgets\SpringBoots\SpringBootsPickUp.cs" />
      <Compile Include="Assets\Scripts\Terrain\TerrainEditor.cs" />
      <Compile Include="Assets\Scripts\Player\ReadPaper.cs" />
      <Compile Include="Assets\Scripts\Gadgets\FreezeRay\ShootIce.cs" />
+     <Compile Include="Assets\Scripts\Player\PauseGame.cs" />
      <Compile Include="Assets\Scripts\Managers\Singleton.cs" />
      <Compile Include="Assets\Scripts\VR\DebounceButton.cs" />
-     <Compile Include="Assets\Scripts\UI\JumpBar.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
      <None Include="Assets\Lava_Flowing_Shader\Shaders\Diffuse_Lava_Distort.shader" />
      <None Include="Assets\Coconut Palm Tree Pack\readme.txt" />

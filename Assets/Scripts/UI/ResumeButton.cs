@@ -9,11 +9,15 @@ public class ResumeButton : MonoBehaviour
 
     public RectTransform menu;
 
+    private EventManager _eventManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        _eventManager = EventManager.Instance;
+
         resumeButton = GetComponent<Button> ();
-        resumeButton.onClick.AddListener(ResumeGame);
+        resumeButton.onClick.AddListener(_eventManager.UnPause);
     }
 
     void ResumeGame()
@@ -22,6 +26,6 @@ public class ResumeButton : MonoBehaviour
 
         menu.gameObject.SetActive(false);
 
-        PauseManager.UpdateCursorState();
+       
     }
 }

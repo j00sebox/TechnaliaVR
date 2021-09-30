@@ -5,23 +5,20 @@ using UnityEngine.UI;
 
 public class ControlsToMenu : MonoBehaviour
 {
-     Button controls;
+    private Button _backbutton;
 
-    public RectTransform menu;
+    private EventManager _eventManger;
 
-    public RectTransform control;
-
-    // Start is called before the first frame update
     void Start()
     {
-        controls = GetComponent<Button> ();
-        controls.onClick.AddListener(ChangeScreen);
+        _eventManger = EventManager.Instance;
+
+        _backbutton = GetComponent<Button> ();
+        _backbutton.onClick.AddListener(ChangeScreen);
     }
 
     void ChangeScreen()
     {
-        menu.gameObject.SetActive(true);
-
-        control.gameObject.SetActive(false);
+        _eventManger.ShowControls(false);
     }
 }
