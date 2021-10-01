@@ -4,32 +4,27 @@ using UnityEngine;
 
 public class ShootWeb : MonoBehaviour
 {
+    [SerializeField]
+    private Transform _webPrefab;
 
-    public Transform web_prefab;
+    private RaycastHit _hit;
 
-    RaycastHit hit;
+    private int _layerMask;
 
-    int layerMask;
-
-    // Start is called before the first frame update
     void Start()
     {
-        layerMask = LayerMask.GetMask("Ground");
+        _layerMask = LayerMask.GetMask("Ground");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Shoot()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out _hit, 100, _layerMask))
         {
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 100, layerMask))
-            {
-                Transform proj = Instantiate(web_prefab, gameObject.transform.position, web_prefab.rotation);
-                proj.GetComponent<WebBallMotion>().target = hit;
-                proj.GetComponent<WebBallMotion>().distance = (hit.point - transform.position).sqrMagnitude;
-                proj.forward = gameObject.transform.forward;
-            }
-            
+            Transform proj = Instantiate(_webPrefab, gameObject.transform.position, _webPrefab.rotation);
+            proj.GetComponent<WebBallMotion>().target = _hit;
+            proj.GetComponent<WebBallMotion>().distance = (_hit.point - transform.position).sqrMagnitude;
+            proj.forward = gameObject.transform.forward;
         }
     }
+
 }

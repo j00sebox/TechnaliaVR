@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
             _rightController.TryGetFeatureValue(CommonUsages.primaryButton, out _aButtonState);
 
-            if(_aButtonState != _prevState)
+            if(_aButtonState && !_prevState)
             {
                 Jump();
             }
@@ -192,8 +192,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!_charging && _canJump)
         {
-            _charging = true;
-
             if(springBoots)
                 StartCoroutine(ChargeJump());
             else
@@ -270,6 +268,8 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator ChargeJump()
     {
         float jumpMod = 0f;
+
+        _charging = true;
 
         _eventManager.SetBarActive(true);
 

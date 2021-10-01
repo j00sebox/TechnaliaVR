@@ -26,24 +26,37 @@ public class InteractableGadget : MonoBehaviour
 
     void Update()
     {
-        if( _aquired && ( !held && slotRef == null && !_dropped ) )
+        if( _aquired && ( !held && slotRef == null ) )
         {
             _dropped = true;
 
-            StartCoroutine("Timer");
+            if(_elapsedTime < _replaceTime)
+            {
+                _elapsedTime += Time.deltaTime;
+            }
+            else
+            {
+                _eventManager.GadgetReturn(this);
+            }
+
+            //StartCoroutine("Timer");
+        }
+        else
+        {
+            _elapsedTime = 0f;
         }
     }
 
     IEnumerator Timer()
     {
-        while(_elapsedTime < _replaceTime && _dropped)
+        while(_elapsedTime < _replaceTime && (!held && slotRef == null))
         {
             _elapsedTime += Time.deltaTime;
 
             yield return null;
         }
 
-        _elapsedTime = 0f;
+        
 
         _eventManager.GadgetReturn(this);
 

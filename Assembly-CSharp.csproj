@@ -50,7 +50,7 @@
      <Compile Include="Assets\Scripts\Terrain\RestoreTerrain.cs" />
      <Compile Include="Assets\Scripts\Gadgets\VRSlot.cs" />
      <Compile Include="Assets\Scripts\Puzzle\Drone.cs" />
-     <Compile Include="Assets\Scripts\Player\GadgetManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\GadgetManager.cs" />
      <Compile Include="Assets\Scripts\UI\QuitButton.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Managers\PauseManager.cs" />
@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\Misc\Paper.cs" />
      <Compile Include="Assets\Scripts\Respawn\RespawnModifier.cs" />
      <Compile Include="Assets\Scripts\UI\ControlsToMenu.cs" />
+     <Compile Include="Assets\Scripts\VR\Hand.cs" />
      <Compile Include="Assets\Scripts\Gadgets\WebCannon\ShootWeb.cs" />
      <Compile Include="Assets\Lava_Flowing_Shader\Scripts\ScrollingUVs_Layers.cs" />
      <Compile Include="Assets\Scripts\Player\PickUp.cs" />
@@ -73,7 +74,6 @@
      <Compile Include="Assets\Scripts\Player\PauseGame.cs" />
      <Compile Include="Assets\Scripts\Managers\Singleton.cs" />
      <Compile Include="Assets\Scripts\VR\DebounceButton.cs" />
-     <Compile Include="Assets\Scripts\VR\Hand.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
      <None Include="Assets\Lava_Flowing_Shader\Shaders\Diffuse_Lava_Distort.shader" />
      <None Include="Assets\Coconut Palm Tree Pack\readme.txt" />
