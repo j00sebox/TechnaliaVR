@@ -21,9 +21,13 @@ public class InteractableGadget : MonoBehaviour
     [HideInInspector]
     public VRSlot slotRef;
 
+    private Timer _timer;
+
     void Start()
     {
         _eventManager = EventManager.Instance;
+
+        _timer = new Timer(_replaceTime, () => { _eventManager.GadgetReturn(this); });
     }
 
     void Update()
@@ -32,18 +36,11 @@ public class InteractableGadget : MonoBehaviour
         {
             _dropped = true;
 
-            if(_elapsedTime < _replaceTime)
-            {
-                _elapsedTime += Time.deltaTime;
-            }
-            else
-            {
-                _eventManager.GadgetReturn(this);
-            }
+            _timer.Tick(Time.deltaTime);
         }
         else
         {
-            _elapsedTime = 0f;
+            _timer.Reset();
         }
     }
 
