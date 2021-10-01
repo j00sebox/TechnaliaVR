@@ -9,14 +9,16 @@ public class InteractableGadget : MonoBehaviour
 
     private float _elapsedTime = 0f;
 
-    public bool held = false;
-
     private bool _dropped = false;
 
     private bool _aquired = false;
 
     private EventManager _eventManager;
 
+    [HideInInspector]
+    public bool held = false;
+
+    [HideInInspector]
     public VRSlot slotRef;
 
     void Start()
@@ -38,29 +40,11 @@ public class InteractableGadget : MonoBehaviour
             {
                 _eventManager.GadgetReturn(this);
             }
-
-            //StartCoroutine("Timer");
         }
         else
         {
             _elapsedTime = 0f;
         }
-    }
-
-    IEnumerator Timer()
-    {
-        while(_elapsedTime < _replaceTime && (!held && slotRef == null))
-        {
-            _elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-
-        
-
-        _eventManager.GadgetReturn(this);
-
-        _dropped = false;
     }
 
     public void OnGrab() {

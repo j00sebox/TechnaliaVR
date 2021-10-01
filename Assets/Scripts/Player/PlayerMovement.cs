@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR;
+using TerrainTools;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -238,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
 
                 // get heightmap coords
                 _tEdit.GetCoords(_terrainHitInfo.point, out int terX, out int terZ);
-
+                    
                 _onIce = _tEdit.CheckIce(terX, terZ);
 
                 webbed = _tEdit.CheckWebbed(terX, terZ);
