@@ -1,11 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR;
 
 public class VRSlot : MonoBehaviour
 {
 
     public GameObject Gadget { get; set; }
+
+    [SerializeField]
+    private XRRig _rig;
+
+    [SerializeField]
+    private float _yPosoffset;
+
+    [SerializeField]
+    private float _angleOffset = 90f;
 
     public void AttachToSlot(GameObject gadget)
     {
@@ -31,8 +40,21 @@ public class VRSlot : MonoBehaviour
 
     public void ReleaseGadget()
     {
-
         Gadget = null;
+    }
+
+    void FixedUpdate()
+    {
+        FollowHeadset();
+    }
+    
+    private void FollowHeadset()
+    {
+        Vector3 _xzoff = Quaternion.Euler(0, _angleOffset, 0) * (_rig.cameraGameObject.transform.forward* 0.5f);
+
+        Vector3 _posInRig = transform.InverseTransformPoint(_rig.cameraGameObject.transform.position + new Vector3(_xzoff.x, _yPosoffset, _xzoff.z));
+
+        transform.position = transform.TransformPoint(_posInRig);
 
     }
 }

@@ -274,6 +274,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 center = transform.InverseTransformPoint(_rig.cameraGameObject.transform.position);
 
         _cc.center = new Vector3(center.x, _cc.height/2 + _cc.skinWidth, center.z);
+
     }
 
     // compress the spring boots to get a larger jump

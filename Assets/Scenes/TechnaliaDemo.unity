@@ -5437,6 +5437,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3131205855217795813, guid: 521585638ba54ce4695f2370bd67d114,
+        type: 3}
+      propertyPath: _rig
+      value: 
+      objectReference: {fileID: 1309013603}
+    - target: {fileID: 3131205855217795813, guid: 521585638ba54ce4695f2370bd67d114,
+        type: 3}
+      propertyPath: _angleOffset
+      value: 180
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 521585638ba54ce4695f2370bd67d114, type: 3}
 --- !u!4 &526821248 stripped
@@ -23688,6 +23698,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e26ee7af6fdc64d8bffad7e5482c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sampleWidth: 10
+  _sampleHeight: 10
 --- !u!114 &1309013611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48536,6 +48548,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3131205855217795813, guid: 521585638ba54ce4695f2370bd67d114,
+        type: 3}
+      propertyPath: _rig
+      value: 
+      objectReference: {fileID: 1309013603}
+    - target: {fileID: 3131205855217795813, guid: 521585638ba54ce4695f2370bd67d114,
+        type: 3}
+      propertyPath: _offset.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3131205855217795813, guid: 521585638ba54ce4695f2370bd67d114,
+        type: 3}
+      propertyPath: _offset.y
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3131205855217795813, guid: 521585638ba54ce4695f2370bd67d114,
+        type: 3}
+      propertyPath: _offset.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3131205855217795813, guid: 521585638ba54ce4695f2370bd67d114,
+        type: 3}
+      propertyPath: _yPosoffset
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3131205855217795813, guid: 521585638ba54ce4695f2370bd67d114,
+        type: 3}
+      propertyPath: _angleOffset
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 521585638ba54ce4695f2370bd67d114, type: 3}
