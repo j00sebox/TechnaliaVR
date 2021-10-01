@@ -115,6 +115,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 Jump();
             }
+            else if(!_aButtonState && _prevState)
+            {
+                _charging = false;
+            }
 
             _prevState = _aButtonState;
             
@@ -142,6 +146,8 @@ public class PlayerMovement : MonoBehaviour
             else
             {  
                 _canJump = false;
+                webbed = false;
+                _onIce = false;
 
                 if(_cc.velocity.y < 0)
                     _fallingSpeed = 0;
@@ -178,8 +184,10 @@ public class PlayerMovement : MonoBehaviour
             Vector3 v3Dir = headYaw * new Vector3(_direction.x, 0, _direction.y);
 
             // apply the velocity to the player
-            _cc.Move(v3Dir * _moveSpeed * Time.fixedDeltaTime);
-
+            if(!webbed)
+            {
+                _cc.Move(v3Dir * _moveSpeed * Time.fixedDeltaTime);
+            }
         }
     }
 
@@ -193,15 +201,15 @@ public class PlayerMovement : MonoBehaviour
         if(!_charging && _canJump)
         {
             if(springBoots)
+            {
                 StartCoroutine(ChargeJump());
-            else
+            }
+            else if(!webbed)
+            {
                 _fallingSpeed = Mathf.Sqrt( _jumpVel * -2f * _gravity );
+            }
+                
         }
-        else
-        {
-            _charging = false;
-        }
-        
     }
 
     public bool IsGrounded()
@@ -231,27 +239,30 @@ public class PlayerMovement : MonoBehaviour
                 // get heightmap coords
                 _tEdit.GetCoords(_terrainHitInfo.point, out int terX, out int terZ);
 
-                terrainNormal = _terrain.terrainData.GetInterpolatedNormal(  (_terrainHitInfo.point.x - _terrain.GetPosition().x) / _terrain.terrainData.size.x,  (_terrainHitInfo.point.z - _terrain.GetPosition().z) / _terrain.terrainData.size.z);
-
-                float angle = Vector3.Angle(terrainNormal, Vector3.up);
-
-                if(angle > 45)
-                {
-                    dirRight = Vector3.Cross(terrainNormal, Vector3.up);
-                    slideDir = Vector3.Cross(terrainNormal, dirRight);
-                }
-
-                _cc.Move(slideDir * angle * _slidingFactor * Time.fixedDeltaTime);
-
                 _onIce = _tEdit.CheckIce(terX, terZ);
 
                 webbed = _tEdit.CheckWebbed(terX, terZ);
-                
+
+                if(!webbed)
+                {
+                    terrainNormal = _terrain.terrainData.GetInterpolatedNormal(  (_terrainHitInfo.point.x - _terrain.GetPosition().x) / _terrain.terrainData.size.x,  (_terrainHitInfo.point.z - _terrain.GetPosition().z) / _terrain.terrainData.size.z);
+
+                    float angle = Vector3.Angle(terrainNormal, Vector3.up);
+
+                    if(angle > 45)
+                    {
+                        dirRight = Vector3.Cross(terrainNormal, Vector3.up);
+                        slideDir = Vector3.Cross(terrainNormal, dirRight);
+                    }
+
+                    _cc.Move(slideDir * angle * _slidingFactor * Time.fixedDeltaTime);
+                }
             }
         }
         else
         {
             _onIce = false;
+            webbed = false;
         }
     }
 
@@ -284,11 +295,18 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        _fallingSpeed = Mathf.Sqrt( (_jumpVel + jumpMod) * -2f * _gravity );
+        // half or more of charge will allow player to escape webbing
+        if(jumpMod*2 >= _maxJumpMod)
+        {
+            webbed = false;
+        }
+        
+        if(!webbed)
+        {
+            _fallingSpeed = Mathf.Sqrt( (_jumpVel + jumpMod) * -2f * _gravity );
+        }
 
         _eventManager.SetBarActive(false);
-        
-        webbed = false;
     }
 }
 
