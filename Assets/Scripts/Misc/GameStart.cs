@@ -8,23 +8,27 @@ public class GameStart : MonoBehaviour
 
     public AudioSource backgroundNoise;
 
-    AudioSource planeCrash;
+    private AudioSource _planeCrashSound;
+
+    private EventManager _eventManager;
 
     void Start()
     {
+        _eventManager = EventManager.Instance;
+
         PauseManager.paused = true;
 
-        planeCrash = GetComponent<AudioSource> ();
+        _planeCrashSound = GetComponent<AudioSource>();
 
-        planeCrash.Play();
+        _planeCrashSound.Play();
 
-        StartCoroutine("waitForClip");
+        StartCoroutine("WaitForClip");
 
     }
 
-    IEnumerator waitForClip()
+    IEnumerator WaitForClip()
     {
-        while(planeCrash.isPlaying)
+        while(_planeCrashSound.isPlaying)
         {
             yield return null;
         }
@@ -34,5 +38,10 @@ public class GameStart : MonoBehaviour
         PauseManager.paused = false;
 
         backgroundNoise.Play();
+
+        yield return new WaitForSeconds(3f);
+
+        _eventManager.DisplayTutorial("You can access the menu by pressing the left menu button.");
+
     }
 }
