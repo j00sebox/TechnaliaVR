@@ -24016,10 +24016,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _leftInput: 4
   _rightInput: 5
-  _walkSpeed: 7
+  _walkSpeed: 10
+  _jumpMoveSpeed: 10
   _maxSpeed: 25
   _iceAcceleration: 1.5
-  _gravity: -12
+  _gravity: -18
   _extraHeight: 0.2
   _jumpVel: 3
   _maxJumpMod: 30
@@ -25256,7 +25257,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 160759245}
-  m_PlaneDistance: 3
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0

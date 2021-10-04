@@ -56,7 +56,7 @@ public class ShootIce : MonoBehaviour
                 {
                     _platform = _hit.transform.gameObject.GetComponent<MovingPlatform> ();
 
-                    if(!_platform.iced)
+                    if(_platform != null && !_platform.iced)
                     {
                         _platform.Icy();
                     }
