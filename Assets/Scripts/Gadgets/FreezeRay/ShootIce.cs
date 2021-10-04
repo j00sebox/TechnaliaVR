@@ -8,6 +8,9 @@ public class ShootIce : MonoBehaviour
     [SerializeField]
     private LayerMask _layerMask;
 
+    [SerializeField]
+    private ParticleSystem _iceEffect;
+
     private RaycastHit _hit;
 
     private TerrainEditor _editor;
@@ -27,17 +30,23 @@ public class ShootIce : MonoBehaviour
     void Start()
     {
         _editor = GetComponent<TerrainEditor> ();
+
         iceAudio = GetComponent<AudioSource>();
     }
 
 
     public void Shoot()
     {
+        _iceEffect.Play();
+
         StartCoroutine("Shooting");
     }
 
     public void StopShooting()
     {
+        _iceEffect.Stop();
+        _iceEffect.Clear();
+
         StopCoroutine("Shooting");
     }
 
@@ -51,6 +60,7 @@ public class ShootIce : MonoBehaviour
                 // {
                 //     iceAudio.Play();
                 // }
+                
 
                 if(_hit.collider.tag == "MovingPlat")
                 {
