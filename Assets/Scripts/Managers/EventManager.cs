@@ -19,6 +19,8 @@ public class EventManager : Singleton<EventManager>
 
     public Action<bool> OnShowControls;
 
+    public Action<string> OnDisplayTutorial;
+
     public void ReadPaper(bool b, GameObject playerRef)
     {
         OnRead?.Invoke(b, playerRef);
@@ -57,5 +59,10 @@ public class EventManager : Singleton<EventManager>
     public void ShowControls(bool b)
     {
         OnShowControls?.Invoke(b);
+    }
+
+    public void DisplayTutorial(string s)
+    {
+        OnDisplayTutorial?.Invoke(s);
     }
 }
