@@ -83,7 +83,7 @@ public class ShootIce : MonoBehaviour
                         _editor.GetCoords(_hit, out int terX, out int terZ);
 
                         // produce ice at specified terrain coordinates
-                        _editor.ModifyTerrain(terX, terZ, 2);
+                        _editor.ModifyTerrain(terX, terZ, TerrainType.ICE);
 
                     }
                 }

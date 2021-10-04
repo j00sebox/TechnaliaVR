@@ -125,7 +125,7 @@ namespace TerrainTools
             z = (int)( ( ( hit.z - _targetT.GetPosition().z ) / _targetT.terrainData.size.z ) * _targetT.terrainData.heightmapResolution );
         }
 
-        public void ModifyTerrain(int x, int z, int layer)
+        public void ModifyTerrain(int x, int z, TerrainType type)
         {
 
             int width, height;
@@ -186,7 +186,7 @@ namespace TerrainTools
                         {
                             for(int i = 0; i < _targetT.terrainData.terrainLayers.Length; i++)
                             {
-                                if(i == layer)
+                                if(i == (int)type)
                                 {
                                     _splat[k, j, i] = 1;
                                 }
@@ -211,7 +211,7 @@ namespace TerrainTools
 
                 _targetT.terrainData.SetAlphamaps(newx, newz, _splat);
 
-                if(layer == 2)
+                if((int)type == 2)
                 {
                     // remove ice after a certain amount of time
                     StartCoroutine(RemoveIce(_targetT, "TerrainBackups/" + _targetT.terrainData.name + "_backup", newx, newz, width, height));

@@ -3,58 +3,70 @@ using TerrainTools;
 
 public class WebBallMotion : MonoBehaviour
 {
-    TerrainEditor editor;
+    [SerializeField]
+    private float _speed = 1500.0f;
 
-    Terrain tob;
+    private TerrainEditor _editor;
 
-    public RaycastHit target;
+    private Terrain _tOb;
 
-    float start_time;
+    private float _startTime;
 
-    float speed = 1500.0f;
+    private Vector3 _initial;
 
-    public float distance;
+    public RaycastHit Target { get; set; }
 
-    Vector3 initial;
+    public float Distance { get; set; }
 
-    void Awake()
+    public ShootWeb Source { get; set; }
+
+    void Start()
     {
-        editor = GetComponent<TerrainEditor> ();
-        initial = gameObject.transform.position;
-        start_time = Time.time;
+        _editor = GetComponent<TerrainEditor>();
+    }
+
+    public void Setup(RaycastHit target, float distance)
+    {
+        _initial = gameObject.transform.position;
+        
+        _startTime = Time.time;
+
+        Target = target;
+
+        Distance = distance;
     }
 
     void Update()
     {
-        float dist_done = (Time.time - start_time) * speed;
+        float dist_done = (Time.time - _startTime) * _speed;
 
-        float ratio_left = dist_done / distance;
+        float ratio_left = dist_done / Distance;
 
-        gameObject.transform.position = Vector3.Lerp(initial, target.point, ratio_left);
+        gameObject.transform.position = Vector3.Lerp(_initial, Target.point, ratio_left);
 
-        if (gameObject.transform.position == target.point)
+        if (gameObject.transform.position == Target.point)
         {
-            spray_web();
+            SprayWeb();
         }
     }
 
-    void spray_web()
+    private void SprayWeb()
     {
-        tob = editor.GetTerrainAtObject(target.transform.gameObject);
+        _tOb = _editor.GetTerrainAtObject(Target.transform.gameObject);
 
-        if(tob != null)
+        if(_tOb != null)
         {
-            editor.SetEditValues(tob);
+            _editor.SetEditValues(_tOb);
 
             // convert player world coordinates into terrain coordinates
-            editor.GetCoords(target, out int terX, out int terZ);
+            _editor.GetCoords(Target, out int terX, out int terZ);
 
-            // produce ice at specified terrain coordinates
-            editor.ModifyTerrain(terX, terZ, 3);
+            // produce web texture at specified terrain coordinates
+            _editor.ModifyTerrain(terX, terZ, TerrainType.WEB);
 
         }
 
-        Destroy(gameObject);
+        Source.RemoveWebBall(transform);
     }
     
 }
