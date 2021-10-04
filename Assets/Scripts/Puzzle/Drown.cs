@@ -4,49 +4,42 @@ using UnityEngine;
 
 public class Drown : MonoBehaviour
 {
+    [SerializeField]
+    private Animator _fadeAnim;
 
-    public RespawnManager rm;
+    private AudioSource _drowningSound;
 
-    Collider player;
-
-    float currCountdownValue;
-
-    public Animator anim;
-
-    AudioSource drowning;
-
-    Collider meshCollider;
+    private Collider _meshCollider;
 
 
     void Start()
     {
-        drowning = GetComponent<AudioSource> ();
-        meshCollider = GetComponent<MeshCollider>();
+        _drowningSound = GetComponent<AudioSource> ();
+        _meshCollider = GetComponent<MeshCollider>();
     }
+
     void OnTriggerEnter(Collider col)
     {
         if(col.tag == "Player")
         {
-            meshCollider.enabled = false;
-            player = col;
-            StartCoroutine(StartCountdown());
-            drowning.Play();
+            _meshCollider.enabled = false;
+    
+            StartCoroutine(DrownPlayer(col.gameObject));
         }
     }
    
 
-    public IEnumerator StartCountdown(float countdownValue = 2)
+    public IEnumerator DrownPlayer(GameObject player, float timeToDrown = 2f)
     {
-        //anim.SetTrigger("FadeOut");
-        currCountdownValue = countdownValue;
-        while (currCountdownValue > 0)
-        {
-            // Debug.Log("Countdown: " + currCountdownValue);
-            yield return new WaitForSeconds(1.0f);
-            currCountdownValue--;
-        }
-        player.transform.position = rm.activeRespawn.position;
-         meshCollider.enabled = true;
+        _fadeAnim.SetTrigger("FadeOut");
+
+        _drowningSound.Play();
+
+        yield return new WaitForSeconds(timeToDrown);
+
+        player.GetComponent<PlayerKill>().Kill();
+
+        _meshCollider.enabled = true;
 
     }
 }

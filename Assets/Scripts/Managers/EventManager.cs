@@ -21,6 +21,8 @@ public class EventManager : Singleton<EventManager>
 
     public Action<string> OnDisplayTutorial;
 
+    public Action<int> OnSetActiveRespawn;
+
     public void ReadPaper(bool b, GameObject playerRef)
     {
         OnRead?.Invoke(b, playerRef);
@@ -64,5 +66,10 @@ public class EventManager : Singleton<EventManager>
     public void DisplayTutorial(string s)
     {
         OnDisplayTutorial?.Invoke(s);
+    }
+
+    public void SetActiveRespawn(int ind)
+    {
+        OnSetActiveRespawn?.Invoke(ind);
     }
 }

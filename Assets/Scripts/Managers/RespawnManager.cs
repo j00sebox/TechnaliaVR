@@ -2,19 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RespawnManager : MonoBehaviour
+public class RespawnManager : Singleton<RespawnManager>
 {
-   public Transform[] respawnPoints;
+    [SerializeField]
+    private Transform[] _respawnPoints;
 
-   public Transform activeRespawn;
+    private EventManager _eventManager;
 
-   void Awake()
-   {
-       activeRespawn = respawnPoints[0];
-   }
+    public Transform ActiveRespawn 
+    { 
+        get
+        {
+            return _activeRespawn;
+        } 
+    }
 
+    private Transform _activeRespawn;
 
-    
+    void Start()
+    {
+        _eventManager = EventManager.Instance;
 
+        _eventManager.OnSetActiveRespawn += SetActiveSpawn;
+
+        _activeRespawn = _respawnPoints[0];
+    }
+
+    private void SetActiveSpawn(int index)
+    {
+        _activeRespawn = _respawnPoints[index];
+    }
 
 }

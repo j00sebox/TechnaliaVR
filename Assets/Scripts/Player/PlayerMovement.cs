@@ -103,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
         _rightController = InputDevices.GetDeviceAtXRNode(_rightInput);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(!PauseManager.paused && !PauseManager.reading)

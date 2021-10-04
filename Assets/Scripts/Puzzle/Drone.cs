@@ -15,12 +15,14 @@ public class Drone : MonoBehaviour
 
     public float movementSpeed = 1.5f;
 
-    public RespawnManager rm;
+    private RespawnManager _rm;
 
     void Start()
     {
         // save the original position of the platform
         origin = transform.position;
+
+        _rm = RespawnManager.Instance;
     }
 
     void FixedUpdate()
@@ -112,8 +114,7 @@ public class Drone : MonoBehaviour
     {
         if(col.tag == "Player")
         {
-            col.transform.position = rm.activeRespawn.position;
-            col.GetComponent<PlayerMovement>().webbed = false;
+            col.GetComponent<PlayerKill>().Kill();
         }
     }
 }

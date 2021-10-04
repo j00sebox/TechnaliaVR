@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class RespawnModifier : MonoBehaviour
 {
+    [SerializeField]
+    private int _index;
 
-    public RespawnManager rm;
+    private EventManager _eventManager;
 
-    public int index;
+    void Start()
+    {
+        _eventManager = EventManager.Instance;
+    }
 
     // switch respawn points when player makes it to certain point
-   void OnTriggerEnter(Collider col)
-   {
-       if(col.tag == "Player")
-       {
-           rm.activeRespawn = rm.respawnPoints[index];
-       }
-   }
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.tag == "Player")
+        {
+            _eventManager.SetActiveRespawn(_index);
+        }
+    }
 }
