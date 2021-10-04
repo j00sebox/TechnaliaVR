@@ -36,45 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Gadgets\InteractableGadget.cs" />
-     <Compile Include="Assets\Scripts\UI\TitleButton.cs" />
-     <Compile Include="Assets\Scripts\Gadgets\WebCannon\WebBallMotion.cs" />
-     <Compile Include="Assets\Scripts\Puzzle\Drown.cs" />
-     <Compile Include="Assets\Scripts\Puzzle\FreezePanel.cs" />
-     <Compile Include="Assets\Scripts\Misc\GameStart.cs" />
-     <Compile Include="Assets\Scripts\Player\LookAround.cs" />
-     <Compile Include="Assets\Scripts\Managers\RespawnManager.cs" />
-     <Compile Include="Assets\Scripts\UI\MenuToControls.cs" />
-     <Compile Include="Assets\Scripts\Puzzle\MovingPlatform.cs" />
-     <Compile Include="Assets\Scripts\Misc\FPSCounter.cs" />
-     <Compile Include="Assets\Scripts\Terrain\RestoreTerrain.cs" />
-     <Compile Include="Assets\Scripts\Gadgets\VRSlot.cs" />
-     <Compile Include="Assets\Scripts\Puzzle\Drone.cs" />
-     <Compile Include="Assets\Scripts\Managers\GadgetManager.cs" />
-     <Compile Include="Assets\Scripts\UI\QuitButton.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
-     <Compile Include="Assets\Scripts\Managers\PauseManager.cs" />
-     <Compile Include="Assets\Scripts\Misc\GameEnd.cs" />
-     <Compile Include="Assets\Scripts\UI\ResumeButton.cs" />
-     <Compile Include="Assets\Scripts\UI\StartButton.cs" />
-     <Compile Include="Assets\Scripts\Managers\EventManager.cs" />
-     <Compile Include="Assets\Scripts\Misc\Paper.cs" />
-     <Compile Include="Assets\Scripts\Respawn\RespawnModifier.cs" />
-     <Compile Include="Assets\Scripts\UI\ControlsToMenu.cs" />
-     <Compile Include="Assets\Scripts\VR\Hand.cs" />
-     <Compile Include="Assets\Scripts\Gadgets\WebCannon\ShootWeb.cs" />
      <Compile Include="Assets\Lava_Flowing_Shader\Scripts\ScrollingUVs_Layers.cs" />
-     <Compile Include="Assets\Scripts\Player\PickUp.cs" />
-     <Compile Include="Assets\Scripts\UI\JumpBar.cs" />
-     <Compile Include="Assets\Scripts\Items\ItemPickup.cs" />
-     <Compile Include="Assets\Scripts\Gadgets\SpringBoots\SpringBootsPickUp.cs" />
-     <Compile Include="Assets\Scripts\Terrain\TerrainEditor.cs" />
-     <Compile Include="Assets\Scripts\Player\ReadPaper.cs" />
-     <Compile Include="Assets\Scripts\Gadgets\FreezeRay\ShootIce.cs" />
-     <Compile Include="Assets\Scripts\Player\PauseGame.cs" />
-     <Compile Include="Assets\Scripts\Managers\Singleton.cs" />
-     <Compile Include="Assets\Scripts\Tools\DebounceButton.cs" />
-     <Compile Include="Assets\Scripts\Tools\Timer.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
      <None Include="Assets\Lava_Flowing_Shader\Shaders\Diffuse_Lava_Distort.shader" />
      <None Include="Assets\Coconut Palm Tree Pack\readme.txt" />
@@ -802,6 +764,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="GameAssembly.csproj">
+      <Project>{3b1842a5-1f9f-7ce4-9d19-2495cf950f1d}</Project>
+      <Name>GameAssembly</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

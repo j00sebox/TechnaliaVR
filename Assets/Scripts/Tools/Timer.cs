@@ -1,6 +1,5 @@
 using System;
 
-
 public class Timer
 {
     public float Duration { 
@@ -9,10 +8,12 @@ public class Timer
         {
             return _duration;
         } 
+    }
 
-        private set 
+    public float ElapsedTime { 
+        get
         {
-            _duration = value;
+            return _elapsedTime;
         } 
     }
 
@@ -26,14 +27,16 @@ public class Timer
 
     public Timer(float duration, Action actionToPerform) 
     {
-        Duration = duration;
+        _duration = duration;
 
         OnComplete = actionToPerform;
     }
 
     public void Tick(float deltaTime)
     {
-        if(_elapsedTime < _duration)
+        if(deltaTime < 0f) throw new ArgumentException("Delta time cannot be negative !");
+
+        if( (_elapsedTime + deltaTime) < _duration)
         {
             _elapsedTime += deltaTime;
         }

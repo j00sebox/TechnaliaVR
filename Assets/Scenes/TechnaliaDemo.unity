@@ -5094,6 +5094,11 @@ PrefabInstance:
       objectReference: {fileID: 1938131327}
     - target: {fileID: 4616225368708334797, guid: 491f7e9e6f2789446b303163ac0a5f6a,
         type: 3}
+      propertyPath: m_VersionIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616225368708334797, guid: 491f7e9e6f2789446b303163ac0a5f6a,
+        type: 3}
       propertyPath: m_MeshFormatVersion
       value: 2
       objectReference: {fileID: 0}
@@ -22324,6 +22329,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1366898430}
+    - target: {fileID: 4616225368708334797, guid: 491f7e9e6f2789446b303163ac0a5f6a,
+        type: 3}
+      propertyPath: m_VersionIndex
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616225368708334797, guid: 491f7e9e6f2789446b303163ac0a5f6a,
+        type: 3}
+      propertyPath: m_MeshFormatVersion
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 491f7e9e6f2789446b303163ac0a5f6a, type: 3}
 --- !u!1 &1199422088
@@ -24021,8 +24036,8 @@ Mesh:
     firstVertex: 0
     vertexCount: 24
     localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
+      m_Center: {x: 9.5, y: 0.75, z: -12}
+      m_Extent: {x: 9.5, y: 0.75, z: 12}
   m_Shapes:
     vertices: []
     shapes: []

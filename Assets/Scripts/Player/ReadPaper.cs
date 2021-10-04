@@ -35,7 +35,7 @@ public class ReadPaper : MonoBehaviour
     {
         if(inRange && _pMovement.IsGrounded())
         {
-            _db.PollButton();
+            _db.PollButton(Time.unscaledDeltaTime);
         }
     }
 

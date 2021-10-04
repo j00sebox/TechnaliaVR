@@ -26,7 +26,7 @@ public class PickUp : MonoBehaviour
 
     void Update()
     {
-        _db.PollButton();
+        _db.PollButton(Time.unscaledDeltaTime);
     }
     
 }

@@ -41,13 +41,6 @@ public class PauseGame : MonoBehaviour
 
     void Update()
     {
-        _db.PollButton();
+        _db.PollButton(Time.unscaledDeltaTime);
     }
-
-    private void CheckPause()
-    {
-        
-    }
-
-    
 }

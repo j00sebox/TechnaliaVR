@@ -9,6 +9,20 @@ public class DebounceButton
 
     private InputFeatureUsage<bool> _button;
 
+    public bool ButtonState { 
+        get
+        {
+            return _state;
+        } 
+    }
+
+    public bool DebounceState { 
+        get
+        {
+            return _debounce;
+        }  
+    }
+
     private bool _state;
 
     private bool _prevState;
@@ -37,12 +51,12 @@ public class DebounceButton
 
         _timer = new Timer(dBounceT, () => { _debounce = false; });
     }
-
-    public void PollButton()
+    
+    public void PollButton(float deltaTime)
     {
         if(_debounce)
         {
-            _timer.Tick(Time.unscaledDeltaTime);
+            _timer.Tick(deltaTime);
         }
 
         _device.TryGetFeatureValue(_button, out _state);
