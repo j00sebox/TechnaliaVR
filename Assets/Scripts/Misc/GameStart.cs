@@ -22,11 +22,11 @@ public class GameStart : MonoBehaviour
 
         _planeCrashSound.Play();
 
-        StartCoroutine("WaitForClip");
+        StartCoroutine("GameOpening");
 
     }
 
-    IEnumerator WaitForClip()
+    IEnumerator GameOpening()
     {
         while(_planeCrashSound.isPlaying)
         {
@@ -42,6 +42,13 @@ public class GameStart : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         _eventManager.DisplayTutorial("You can access the menu by pressing the left menu button.");
+
+        yield return new WaitForSeconds(7f);
+
+        _eventManager.DisplayTutorial("The blue orb is holster for your gadgets. You can place gadgets there for safe keeping." +
+                                       "You have one on your side and one on your back.");
+
+        _eventManager.DisplayTutorial("If you happen to lose a gadget don't worry it will automatically come back to one of your holsters after a few seconds.");
 
     }
 }
