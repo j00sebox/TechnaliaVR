@@ -7,6 +7,8 @@ public class Hand : MonoBehaviour
 {
     private ActionBasedController _controller;
 
+    private Animator _handAnim;
+
     private float _gripping = 0f;
 
     private float _sample;
@@ -21,29 +23,21 @@ public class Hand : MonoBehaviour
 
     }
 
-    // void Update()
-    // {
-    //     _sample = _controller.selectAction.action.ReadValue<float>();
-
-    //     if(_gripping == 1f && _sample == 0f)
-    //     {
-    //         SetIdle();
-    //     }
-
-    //     _gripping = _sample;
-    // }
-
     void SetAnim(UnityEngine.InputSystem.InputAction.CallbackContext cc)
-    {
-        Animator anim = _controller.model.GetComponentInChildren<Animator>();
+    {   
+        if(_handAnim == null)
+            _handAnim = _controller.model.GetComponentInChildren<Animator>();
 
-        anim.SetBool("Grip", true);
+        _handAnim.SetBool("Grip", true);
     }
 
     void SetIdle(UnityEngine.InputSystem.InputAction.CallbackContext cc)
     {
-        Animator anim = _controller.model.GetComponentInChildren<Animator>();
+        _handAnim.SetBool("Grip", false);
+    }
 
-        anim.SetBool("Grip", false);
+    public void ResetAnim()
+    {
+        _handAnim.SetBool("Grip", false);
     }
 }

@@ -62,6 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e26ee7af6fdc64d8bffad7e5482c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sampleWidth: 10
+  _sampleHeight: 10
 --- !u!82 &6505760763450493945
 AudioSource:
   m_ObjectHideFlags: 0
@@ -443,7 +445,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _replaceTime: 3
   held: 0
-  inSlot: 0
   slotRef: {fileID: 0}
 --- !u!1 &8949360181578892552
 GameObject:
