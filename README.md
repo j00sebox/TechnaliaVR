@@ -2,6 +2,8 @@
 
 "Launcher" (https://skfb.ly/JIvQ) by Semih Parlayan is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 
+"Simple Ray Gun" (https://skfb.ly/6XyDY) by Playblast is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
 ## Synopsis
 
 You crashland on an island inhabited by a mad scientist and his many inventions. Explore the island using gadgets you find in order to make it home.
