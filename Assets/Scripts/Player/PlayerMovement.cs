@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     private float _walkSpeed = 5f;
 
     [SerializeField]
+    private float _jumpMoveSpeed = 10f;
+
+    [SerializeField]
     private float _maxSpeed = 20f;
 
     [SerializeField]
@@ -136,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
             CapsuleFollowHeadset();
 
             
+            
             /**********GRAVITY**********/
 
             if(IsGrounded())
@@ -143,12 +147,35 @@ public class PlayerMovement : MonoBehaviour
                 CheckTerrain();
 
                 _canJump = true;
+
+                /**********ICE**********/
+
+                if(IsMoving())
+                {
+                    if(_onIce)
+                    {
+                        _moveSpeed += _iceAcceleration * Time.fixedDeltaTime;
+                    }
+                    else if(_moveSpeed > _walkSpeed)
+                    {
+                        _moveSpeed -= _iceAcceleration * 2f * Time.fixedDeltaTime;
+                    }
+
+                    _moveSpeed = Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
+                }
+                else
+                {
+                    _moveSpeed = _walkSpeed;
+                }
+
             }
             else
             {  
                 _canJump = false;
                 webbed = false;
                 _onIce = false;
+
+                _moveSpeed = _jumpMoveSpeed;
 
                 if(_cc.velocity.y < 0)
                     _fallingSpeed = 0;
@@ -158,26 +185,7 @@ public class PlayerMovement : MonoBehaviour
 
             _cc.Move(Vector3.up * _fallingSpeed * Time.fixedDeltaTime);
 
-            /**********ICE**********/
-
-            if(IsMoving())
-            {
-                if(_onIce)
-                {
-                    _moveSpeed += _iceAcceleration * Time.fixedDeltaTime;
-                }
-                else if(_moveSpeed > _walkSpeed)
-                {
-                    _moveSpeed -= _iceAcceleration * 2f * Time.fixedDeltaTime;
-                }
-
-                _moveSpeed = Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
-            }
-            else
-            {
-                _moveSpeed = _walkSpeed;
-            }
-
+            
             /**********MOVE**********/
 
             Quaternion headYaw = Quaternion.Euler(0, _rig.cameraGameObject.transform.eulerAngles.y, 0);

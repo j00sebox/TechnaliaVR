@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
+    [SerializeField]
+    private float _holdTime = 1.5f;
+    
     public float movementSpeed = 1f;
 
     public float backwardsMovementSpeed = 0f;
@@ -154,7 +157,9 @@ public class MovingPlatform : MonoBehaviour
     IEnumerator PlatformHold()
     {
         hold = true;
-        yield return new WaitForSeconds(1.5f);
+
+        yield return new WaitForSeconds(_holdTime);
+        
         hold = false;
     }
 

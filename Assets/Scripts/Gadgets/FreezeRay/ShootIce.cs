@@ -65,7 +65,7 @@ public class ShootIce : MonoBehaviour
                 {
                     _freezePanel = _hit.transform.gameObject.GetComponent<FreezePanel> ();
 
-                    if(!_freezePanel.frozen)
+                    if(_freezePanel != null && !_freezePanel.frozen)
                     {
                         _freezePanel.PowerPlatforms();
                     }
