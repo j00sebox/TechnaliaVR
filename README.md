@@ -3,6 +3,11 @@
  - [Synopsis](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#synopsis)
  - [Gameplay](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#gameplay)
    - [Freeze Ray](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#freeze-ray)
+   - [Diary Entries](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#diary-entries)
+   - [Spring Boots](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#spring-boots)
+   - [Web Cannon](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#web-cannon)
+ - [Assets Used](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#assets-used)
+ - [How To Run](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#how-to-run)
 
 ## Synopsis
 
