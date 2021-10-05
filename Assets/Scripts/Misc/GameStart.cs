@@ -16,10 +16,10 @@ public class GameStart : MonoBehaviour
     {
         _eventManager = EventManager.Instance;
 
-        PauseManager.paused = true;
-
         _planeCrashSound = GetComponent<AudioSource>();
 
+        PauseManager.paused = true;
+        
         _planeCrashSound.Play();
 
         StartCoroutine("GameOpening");

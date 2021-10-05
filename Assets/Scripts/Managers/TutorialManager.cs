@@ -77,18 +77,21 @@ public class TutorialManager : Singleton<TutorialManager>
             }
         }
 
-        _foundTuts.Add(title, text);
-                
-        Dropdown.OptionData dod = new Dropdown.OptionData();
-        dod.text = title;
-
-        _tutorialDropDown.options.Add(dod);
-
-        if(_tutorialDropDown.options.Count == 1)
+        if(!_foundTuts.ContainsKey(title))
         {
-            _tutorialDropDown.captionText.text = _tutorialDropDown.options[0].text;
+            _foundTuts.Add(title, text);
+                
+            Dropdown.OptionData dod = new Dropdown.OptionData();
+            dod.text = title;
 
-            _menuTextArea.text = _foundTuts[_tutorialDropDown.options[0].text];
+            _tutorialDropDown.options.Add(dod);
+
+            if(_tutorialDropDown.options.Count == 1)
+            {
+                _tutorialDropDown.captionText.text = _tutorialDropDown.options[0].text;
+
+                _menuTextArea.text = _foundTuts[_tutorialDropDown.options[0].text];
+            }
         }
     }
 

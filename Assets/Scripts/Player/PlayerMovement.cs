@@ -40,6 +40,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private LayerMask _layerMask;
 
+    [SerializeField]
+    private AudioClip _iceSound;
+
+    [SerializeField]
+    private AudioClip _sandSound;
+
     private bool _canJump;
 
     private float _timeElapsed;
@@ -64,11 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool _prevState = false;
 
-    AudioSource[] footstepSound;
-
-    int sandSound = 1;
-
-    int iceSound = 0;
+    private AudioSource _footstepSounds;
 
     public bool springBoots = false;
 
@@ -86,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
 
     private EventManager _eventManager;
 
+    private bool _grounded;
+
     void Start()
     {
         _eventManager = EventManager.Instance;
@@ -95,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
         _rig = GetComponent<XRRig>();
 
         _tEdit = GetComponent<TerrainEditor> ();
+
+        _footstepSounds = GetComponent<AudioSource>();
 
         _moveSpeed = _walkSpeed;
 
@@ -137,7 +143,9 @@ public class PlayerMovement : MonoBehaviour
             
             /**********GRAVITY**********/
 
-            if(IsGrounded())
+            _grounded = IsGrounded();
+
+            if(_grounded)
             {
                 CheckTerrain();
 
@@ -164,16 +172,28 @@ public class PlayerMovement : MonoBehaviour
                 if(_onIce)
                 {
                     _moveSpeed += _iceAcceleration * Time.fixedDeltaTime;
-                }
-                else if(_moveSpeed > _walkSpeed)
-                {
-                    _moveSpeed -= _iceAcceleration * 2f * Time.fixedDeltaTime;
-                }
 
+                    PlayClip(_iceSound);
+                }
+                else
+                {
+                    if(_moveSpeed > _walkSpeed)
+                    {
+                        _moveSpeed -= _iceAcceleration * 2f * Time.fixedDeltaTime;
+                    }
+
+                    PlayClip(_sandSound);
+                }
+                
                 _moveSpeed = Mathf.Clamp(_moveSpeed, _walkSpeed, _maxSpeed);
             }
             else
             {
+                if(_footstepSounds.isPlaying)
+                {
+                    _footstepSounds.Stop();
+                }
+
                 _moveSpeed = _walkSpeed;
             }
 
@@ -194,6 +214,36 @@ public class PlayerMovement : MonoBehaviour
     private bool IsMoving()
     {
         return _direction.x != 0 || _direction.y != 0;
+    }
+
+    private void PlayClip(AudioClip ac)
+    {
+        if(_grounded && !PauseManager.paused)
+        {
+            if(ac != _footstepSounds.clip)
+            {
+                StopSound();
+            
+                _footstepSounds.clip = ac;
+            }
+
+            if(!_footstepSounds.isPlaying)
+            {
+                _footstepSounds.Play();
+            }
+        }
+        else
+        {
+            StopSound();
+        }
+    }
+
+    private void StopSound()
+    {
+        if(_footstepSounds.isPlaying)
+        {
+            _footstepSounds.Stop();
+        }
     }
 
     private void Jump()

@@ -32,14 +32,19 @@ public class PauseManager : Singleton<PauseManager>
 
     private GameObject _camera;
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         reading = false;
         paused = false;
 
         // if reloading into scene make sure time scale is 1
         Time.timeScale = 1;
+    }
 
+    void Start()
+    {
         _eventManager = EventManager.Instance;
 
         _eventManager.OnRead += SetRead;

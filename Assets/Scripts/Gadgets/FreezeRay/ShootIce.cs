@@ -23,21 +23,24 @@ public class ShootIce : MonoBehaviour
 
     public Transform iceSheet;
 
-    AudioSource iceAudio;
+    private AudioSource _iceAudio;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         _editor = GetComponent<TerrainEditor> ();
 
-        iceAudio = GetComponent<AudioSource>();
+        _iceAudio = GetComponent<AudioSource>();
     }
 
 
     public void Shoot()
     {
         _iceEffect.Play();
+
+        if(!_iceAudio.isPlaying)
+        {
+            _iceAudio.Play();
+        }
 
         StartCoroutine("Shooting");
     }
@@ -46,6 +49,11 @@ public class ShootIce : MonoBehaviour
     {
         _iceEffect.Stop();
         _iceEffect.Clear();
+
+        if(_iceAudio.isPlaying)
+        {
+            _iceAudio.Stop();
+        }
 
         StopCoroutine("Shooting");
     }
@@ -56,12 +64,6 @@ public class ShootIce : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out _hit, 15, _layerMask))
             {
-                // if(!iceAudio.isPlaying)
-                // {
-                //     iceAudio.Play();
-                // }
-                
-
                 if(_hit.collider.tag == "MovingPlat")
                 {
                     _platform = _hit.transform.gameObject.GetComponent<MovingPlatform> ();
