@@ -1,6 +1,6 @@
 # Technalia
 
- - [Synopsis] (https://github.com/josharms00/TechnaliaVR/blob/main/README.md#synopsis)
+ - [Synopsis](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#synopsis)
 
 ## Synopsis
 
