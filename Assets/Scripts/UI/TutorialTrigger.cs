@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TutorialTrigger : MonoBehaviour
 {
+    [SerializeField]
+    private string title;
+
     [SerializeField, TextArea]
     private string text;
 
@@ -18,7 +21,7 @@ public class TutorialTrigger : MonoBehaviour
     {
         if(coll.tag == "Player")
         {
-            _eventManager.DisplayTutorial(text);
+            _eventManager.DisplayTutorial(title, text);
 
             Destroy(gameObject);
         }

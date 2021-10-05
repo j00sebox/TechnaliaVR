@@ -18,6 +18,9 @@ public class PauseManager : Singleton<PauseManager>
     private RectTransform _controls;
 
     [SerializeField]
+    private RectTransform _tutorials;
+
+    [SerializeField]
     private XRInteractorLineVisual _leftLR;
 
     [SerializeField]
@@ -43,6 +46,7 @@ public class PauseManager : Singleton<PauseManager>
         _eventManager.OnPause += Pause;
         _eventManager.OnUnPause += UnPause;
         _eventManager.OnShowControls += ShowControls;
+        _eventManager.OnShowTutorials += ShowTutorials;
 
         _player = GameObject.FindGameObjectWithTag("Player");
         _camera = GameObject.Find("Main Camera");
@@ -77,6 +81,13 @@ public class PauseManager : Singleton<PauseManager>
         _controls.gameObject.SetActive(b);
     }
 
+    private void ShowTutorials(bool b)
+    {
+        _menu.gameObject.SetActive(!b);
+
+        _tutorials.gameObject.SetActive(b);
+    }
+
     private void UnPause()
     {
         Time.timeScale = 1;
@@ -88,6 +99,7 @@ public class PauseManager : Singleton<PauseManager>
         else
         {
             _controls.gameObject.SetActive(false);
+            _tutorials.gameObject.SetActive(false);
         }
 
         // not ideal but best I can do for now

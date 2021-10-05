@@ -19,7 +19,9 @@ public class EventManager : Singleton<EventManager>
 
     public Action<bool> OnShowControls;
 
-    public Action<string> OnDisplayTutorial;
+    public Action<bool> OnShowTutorials;
+
+    public Action<string, string> OnDisplayTutorial;
 
     public Action<int> OnSetActiveRespawn;
 
@@ -63,9 +65,15 @@ public class EventManager : Singleton<EventManager>
         OnShowControls?.Invoke(b);
     }
 
-    public void DisplayTutorial(string s)
+    public void ShowTutorials(bool b)
     {
-        OnDisplayTutorial?.Invoke(s);
+        OnShowTutorials?.Invoke(b);
+    }
+
+
+    public void DisplayTutorial(string title, string text)
+    {
+        OnDisplayTutorial?.Invoke(title, text);
     }
 
     public void SetActiveRespawn(int ind)

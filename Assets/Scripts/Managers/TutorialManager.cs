@@ -12,6 +12,12 @@ public class TutorialManager : Singleton<TutorialManager>
     private Text _tutorialText;
 
     [SerializeField]
+    private Dropdown _tutorialDropDown;
+
+    [SerializeField]
+    private Text _menuTextArea;
+
+    [SerializeField]
     private float _displayTime = 3f;
 
     public bool TutorialsEnabled 
@@ -28,7 +34,9 @@ public class TutorialManager : Singleton<TutorialManager>
 
     private Timer _timer;
 
-    private Queue<string> _tutorialsInQ;
+    private Queue<(string, string)> _tutorialsInQ;
+
+    private Dictionary<string, string> _foundTuts;
 
     void Start()
     {
@@ -36,17 +44,22 @@ public class TutorialManager : Singleton<TutorialManager>
 
         _eventManager.OnDisplayTutorial += DisplayTip;
 
-        _tutorialsInQ = new Queue<string>();
+        _tutorialsInQ = new Queue<(string, string)>();
+
+        _foundTuts = new Dictionary<string, string>();
 
         _timer = new Timer(_displayTime, () => {
             _box.SetActive(false);
         });
+
+        _tutorialDropDown.onValueChanged.AddListener( delegate {
+            DropdownItemChanged();
+        }); 
     }
 
-    public void Enable() { _enabled = true; }
-    public void Disable() { _enabled = false; }
+    public void ToggleEnable() { _enabled = !_enabled; }
 
-    private void DisplayTip(string text)
+    private void DisplayTip(string title, string text)
     {
         if(_enabled)
         {
@@ -60,8 +73,22 @@ public class TutorialManager : Singleton<TutorialManager>
             }
             else
             {
-                _tutorialsInQ.Enqueue(text);
+                _tutorialsInQ.Enqueue((title, text));
             }
+        }
+
+        _foundTuts.Add(title, text);
+                
+        Dropdown.OptionData dod = new Dropdown.OptionData();
+        dod.text = title;
+
+        _tutorialDropDown.options.Add(dod);
+
+        if(_tutorialDropDown.options.Count == 1)
+        {
+            _tutorialDropDown.captionText.text = _tutorialDropDown.options[0].text;
+
+            _menuTextArea.text = _foundTuts[_tutorialDropDown.options[0].text];
         }
     }
 
@@ -75,7 +102,14 @@ public class TutorialManager : Singleton<TutorialManager>
 
         if(_tutorialsInQ.Count > 0)
         {
-            DisplayTip(_tutorialsInQ.Dequeue());
+            (string, string) tut = _tutorialsInQ.Dequeue();
+
+            DisplayTip(tut.Item1, tut.Item2);
         }
+    }
+
+    private void DropdownItemChanged()
+    {
+        _menuTextArea.text = _foundTuts[_tutorialDropDown.captionText.text];
     }
 }
