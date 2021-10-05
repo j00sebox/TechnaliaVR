@@ -1,17 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class InteractableGadget : MonoBehaviour
 {
     [SerializeField]
     private float _replaceTime = 3f;
-
-    private float _elapsedTime = 0f;
-
-    private bool _dropped = false;
-
-    private bool _aquired = false;
 
     private EventManager _eventManager;
 
@@ -23,19 +16,36 @@ public class InteractableGadget : MonoBehaviour
 
     private Timer _timer;
 
+    private Rigidbody _rb;
+
+    [Flags]
+    public enum GadgetState
+    {
+        NONE = 0,
+        AQUIRED = 1,
+        HELD = 2,
+        INSLOT = 4,
+    };
+
+    public GadgetState CurrentState { get; private set; }
+
+    public VRSlot CurrentSlot { get; private set; }
+
     void Start()
     {
         _eventManager = EventManager.Instance;
+
+        _rb = GetComponent<Rigidbody>();
 
         _timer = new Timer(_replaceTime, () => { _eventManager.GadgetReturn(this); });
     }
 
     void Update()
     {
-        if( _aquired && ( !held && slotRef == null ) )
+        if( CurrentState.HasFlag(GadgetState.AQUIRED) && 
+            !CurrentState.HasFlag(GadgetState.HELD) && 
+            !CurrentState.HasFlag(GadgetState.INSLOT) )
         {
-            _dropped = true;
-
             _timer.Tick(Time.deltaTime);
         }
         else
@@ -46,25 +56,39 @@ public class InteractableGadget : MonoBehaviour
 
     public void OnGrab() {
 
-        if(!_aquired)
+        if( !CurrentState.HasFlag(GadgetState.AQUIRED) )
         {
-            _aquired = true;
+            CurrentState |= GadgetState.AQUIRED;
         }
          
-        held = true; 
+        CurrentState |= GadgetState.HELD;
 
-        if(slotRef)
+        CurrentState &= ~GadgetState.INSLOT;
+
+        if(CurrentSlot)
         {
 
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            _rb.constraints = RigidbodyConstraints.None;
+            
             transform.SetParent(null);
-            slotRef.ReleaseGadget();
+            
+            CurrentSlot.ReleaseGadget();
 
-            slotRef = null;
+            CurrentSlot = null;
+
         }
     }
 
+    public void OnDropInSlot(VRSlot slot)
+    {
+        CurrentState |= GadgetState.INSLOT;
+
+        CurrentState &= ~GadgetState.HELD;
+
+        CurrentSlot = slot;
+    }
+
     public void OnRelease() { 
-        held = false; 
+        CurrentState &= ~GadgetState.HELD;
     }
 }

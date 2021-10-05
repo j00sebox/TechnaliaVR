@@ -1216,7 +1216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6325ce492589f6e4da42d8b9c7a543c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeAnim: {fileID: 0}
+  _fadeAnim: {fileID: 692770297}
 --- !u!114 &95287765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1964,7 +1964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6325ce492589f6e4da42d8b9c7a543c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeAnim: {fileID: 0}
+  _fadeAnim: {fileID: 692770297}
 --- !u!65 &150158815
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4434,7 +4434,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390937732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -109}
+  m_LocalPosition: {x: 0, y: 0, z: -300}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1441287636}
@@ -6695,7 +6695,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -441, y: 180}
+  m_AnchoredPosition: {x: 257, y: 74}
   m_SizeDelta: {x: 160, y: 30.000412}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &614576939
@@ -7721,7 +7721,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -19508,17 +19508,17 @@ PrefabInstance:
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -96.604
+      value: -502.15
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.88
+      value: 110.34
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -470.85
+      value: -267.91
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
@@ -19558,7 +19558,7 @@ PrefabInstance:
     - target: {fileID: 1406338968805728033, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
       propertyPath: text
-      value: Stick to walls to overcome obstacles.
+      value: Use the web cannon to stick to walls to overcome obstacles.
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728033, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
@@ -22604,7 +22604,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23934
+  m_Name: pb_Mesh23932
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -23469,7 +23469,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24874
+  m_Name: pb_Mesh24876
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -23633,7 +23633,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24378
+  m_Name: pb_Mesh24376
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -24258,6 +24258,11 @@ PrefabInstance:
       propertyPath: text
       value: Diary entries can be found throughout the island. Read them for hints
         about obstacles.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406338968805728033, guid: 19f5b9e5584a57344aaac9f0234f2645,
+        type: 3}
+      propertyPath: title
+      value: Diary Entries
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728035, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
@@ -25758,7 +25763,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24450
+  m_Name: pb_Mesh24448
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -26370,7 +26375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367873249}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -337.2, y: 644.6281, z: -678.4}
+  m_LocalPosition: {x: -337.2, y: 644.6281, z: -650.8}
   m_LocalScale: {x: 500, y: 500, z: 1}
   m_Children: []
   m_Father: {fileID: 1554645730}
@@ -26538,7 +26543,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24436
+  m_Name: pb_Mesh24434
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -26866,7 +26871,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25292
+  m_Name: pb_Mesh25294
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -28744,7 +28749,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584507421}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 150}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2085498515}
@@ -28754,7 +28759,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 242.89001, y: -203.61}
+  m_AnchoredPosition: {x: 1122, y: -757}
   m_SizeDelta: {x: 246.6, y: 129.6}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1584507423
@@ -37833,7 +37838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6325ce492589f6e4da42d8b9c7a543c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeAnim: {fileID: 0}
+  _fadeAnim: {fileID: 692770297}
 --- !u!65 &1871006488
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43646,13 +43651,9 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Dear Diary,\n\n\tThis new solar panel is working marvelously it is producing
-    21.5 percent more energy than my last iteration. As usual I cannot enjoy this
-    achievemtent as I discovered today the materials that I used to develop the panel
-    are giving fish in the surrounding area cancer. What am I going to do ? I have
-    half a mind to freeze it solid and shatter it to pieces. A feat that would baffle
-    even the greatest scientist on the mainland and I can't take any pride in it
-    because of some fish. Is this what it costs to make the world a better place
-    ? "
+    21.5 percent more energy than my last iteration. However it seems to be interfering
+    somehow with the platforms leading back to the island. This is exhausting I have
+    half a mind to freeze it over. Where did I put my freeze ray ?"
 --- !u!222 &1954499837
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -44125,7 +44126,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25308
+  m_Name: pb_Mesh25310
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -45346,12 +45347,12 @@ PrefabInstance:
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.88
+      value: 0.604
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -467.64
+      value: -467.831
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
@@ -45391,7 +45392,7 @@ PrefabInstance:
     - target: {fileID: 1406338968805728033, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
       propertyPath: text
-      value: Hold A to charge up a jump. Usefull for reaching high places.
+      value: Hold A to charge up a jump. Useful for reaching high places.
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728033, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
@@ -51715,17 +51716,17 @@ PrefabInstance:
     - target: {fileID: 1453772106739237484, guid: f73368cd2eade874d86d737437112d53,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -96.31
+      value: -502.69
       objectReference: {fileID: 0}
     - target: {fileID: 1453772106739237484, guid: f73368cd2eade874d86d737437112d53,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.88
+      value: 110.34
       objectReference: {fileID: 0}
     - target: {fileID: 1453772106739237484, guid: f73368cd2eade874d86d737437112d53,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -471.24
+      value: -267.91
       objectReference: {fileID: 0}
     - target: {fileID: 1453772106739237484, guid: f73368cd2eade874d86d737437112d53,
         type: 3}
@@ -51783,18 +51784,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.3332
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.8818
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -90.36
+      value: 362.9102
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.88
+      value: 5.989
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -475.24
+      value: -11.305
       objectReference: {fileID: 0}
     - target: {fileID: 1406338968805728032, guid: 19f5b9e5584a57344aaac9f0234f2645,
         type: 3}
@@ -52348,6 +52359,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 216729175, guid: e74818060a925c045a2fbcafe8d0dacf, type: 3}
+      propertyPath: _replaceTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6505760763450493945, guid: e74818060a925c045a2fbcafe8d0dacf,
         type: 3}
       propertyPath: Loop
@@ -52366,17 +52381,17 @@ PrefabInstance:
     - target: {fileID: 8914940154240957554, guid: e74818060a925c045a2fbcafe8d0dacf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -89.87
+      value: 362.9102
       objectReference: {fileID: 0}
     - target: {fileID: 8914940154240957554, guid: e74818060a925c045a2fbcafe8d0dacf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.91
+      value: 5.989
       objectReference: {fileID: 0}
     - target: {fileID: 8914940154240957554, guid: e74818060a925c045a2fbcafe8d0dacf,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -475.26
+      value: -11.305
       objectReference: {fileID: 0}
     - target: {fileID: 8914940154240957554, guid: e74818060a925c045a2fbcafe8d0dacf,
         type: 3}

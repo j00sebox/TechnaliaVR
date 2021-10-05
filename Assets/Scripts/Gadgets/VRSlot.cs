@@ -26,13 +26,13 @@ public class VRSlot : MonoBehaviour
 
         Gadget.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
-        Gadget.GetComponent<InteractableGadget>().slotRef = this;
+        Gadget.GetComponent<InteractableGadget>().OnDropInSlot(this);
     }
 
     void OnTriggerEnter(Collider coll)
     {
 
-        if(Gadget == null && coll.tag == "Gadget" && !coll.gameObject.GetComponent<InteractableGadget>().held)
+        if(Gadget == null && coll.tag == "Gadget" && !coll.gameObject.GetComponent<InteractableGadget>().CurrentState.HasFlag(InteractableGadget.GadgetState.HELD) )
         {
             AttachToSlot(coll.gameObject);
         }

@@ -9,8 +9,6 @@ public class Hand : MonoBehaviour
 
     private Animator _handAnim;
 
-    private float _gripping = 0f;
-
     private float _sample;
 
     void Start()

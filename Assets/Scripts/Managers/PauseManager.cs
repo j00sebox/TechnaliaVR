@@ -64,7 +64,7 @@ public class PauseManager : Singleton<PauseManager>
         _menu.gameObject.SetActive(true);
         
         // sketchy numbers to adjust menu at correct height and distance
-        _menusCanvas.transform.position = _player.transform.position + new Vector3(_camera.transform.forward.x, 0, _camera.transform.forward.z)*4 + Vector3.up*1.25f; 
+        _menusCanvas.transform.position = _player.transform.position + new Vector3(_camera.transform.forward.x, 0, _camera.transform.forward.z)*4 + Vector3.up*1.5f; 
 
         _menusCanvas.LookAt(_player.transform);
 
