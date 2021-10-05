@@ -40,6 +40,22 @@ With these on the player can hold down the jump button in order to jump higher t
 
 ![ChargeJump](/screenshots/chargejump.PNG)
 
+### Web Cannon
+
+![WebCannon](/screenshots/WebCannon.PNG)
+
+This can be used to shoot web balls that explode on impact.
+
+![WebCannonShoot](/screenshots/webcannon_shoot.PNG)
+
+![WebImpact](/screenshots/webimpact.PNG)
+
+This works a similar way to the freeze ray as it will modify the terrain but place webs instead of ice. Once webs have been placed the player will become stuck
+if they step on them. The only way to break out of the web is to either use the freeze ray to destroy the webs or use the spring boots and charge them enough to
+break out. This can be used to your advantage to stick to walls and overcome certain obstacles.
+
+![StuckToWall](/screenshots/stucktoawall.PNG)
+
 ## Assets Used
 
 "Launcher" (https://skfb.ly/JIvQ) by Semih Parlayan.
@@ -49,3 +65,7 @@ With these on the player can hold down the jump button in order to jump higher t
 "Lava Flowing Shader" (https://assetstore.unity.com/packages/vfx/shaders/lava-flowing-shader-33635) by Moonflowe Carnivore
 
 "Coconut Palm Tree Pack" (https://assetstore.unity.com/packages/3d/vegetation/trees/coconut-palm-tree-pack-7888) by Baldinoboy
+
+## How To Run
+
+This project uses Unity's Open XR Toolkit so it technically should work will any headset but I only have an Oculus Quest to test with. I have included the .apk file in the releases. The easiest way to do it would be to use something like Side Quest to load the game onto the Quest. Once uploaded it will appear in the Unkown Sources section.
