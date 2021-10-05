@@ -1,4 +1,4 @@
-# Technalia
+# Technalia VR
 
  - [Synopsis](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#synopsis)
  - [Gameplay](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#gameplay)
