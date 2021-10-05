@@ -2,7 +2,7 @@
 
  - [Synopsis](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#synopsis)
  - [Gameplay](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#gameplay)
- - - [Freeze Ray](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#freeze-ray)
+  - [Freeze Ray](https://github.com/josharms00/TechnaliaVR/blob/main/README.md#freeze-ray)
 
 ## Synopsis
 
